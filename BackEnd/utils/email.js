@@ -6,13 +6,13 @@ const sendEmail = async (email, subject, text) => {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "674708e4d9f9f0",
-        pass: "e3f8e66cfade31",
+        user: process.env.mailTrapUserName,
+        pass: process.env.mailTrapPassword,
       },
     });
 
     await transporter.sendMail({
-      from: "abaybridgeofficial@gmail.com",
+      from: process.env.E_USERNAME,
       to: email,
       subject: subject,
       text: text,
