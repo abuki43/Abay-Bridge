@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const {} = require("../controllers/question-controller");
+const {
+  newQuestion,
+  editQuestion,
+  deleteQuestion,
+} = require("../controllers/question-controller");
 
 const checkAuth = require("../middleware/check-auth");
 

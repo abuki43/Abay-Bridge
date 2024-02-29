@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const userRoutes = require("./routes/user-routes");
 const questionRoutes = require("./routes/question-routes");
@@ -23,6 +24,12 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unkown error occured." });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("Server is running on port " + process.env.PORT);
-});
+mongoose
+  .connect(process.env.mongoDBUrl)
+  .then(() => {
+    app.listen(process.env.PORT);
+    console.log("listening on " + process.env.PORT);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
+const Token = require("../models/token");
 const sendEmail = require("../utils/email");
 const {
   loginValidator,
@@ -21,74 +22,158 @@ const signup = async (req, res, next) => {
     return next(new HttpError(error.details[0].message, 422));
   }
 
-  const existingUser = users.find((user) => user.email === email);
-  if (existingUser) {
-    const error = new HttpError(
-      "Could not create user, email already exists.",
-      409
-    );
-    return next(error);
-  }
-
-  let hashedPassword;
   try {
-    hashedPassword = await bcrypt.hash(password, 12);
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      const error = new HttpError(
+        "Could not create user, email already exists.",
+        409
+      );
+      return next(error);
+    }
+
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(password, 12);
+    } catch (err) {
+      const error = new HttpError(
+        "Could not create user, please try again",
+        500
+      );
+      return next(error);
+    }
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      questions: [],
+      verificationStatus: false,
+      dateJoined: Date.now(),
+    });
+
+    try {
+      await newUser.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Could not create user, please try again!" + err,
+        500
+      );
+      return next(error);
+    }
+
+    const newToken = new Token({
+      userId: newUser.id,
+      token: crypto.randomBytes(32).toString("hex"),
+    });
+
+    try {
+      await newToken.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Could not generate token, please try again",
+        500
+      );
+      return next(error);
+    }
+
+    const message = `${process.env.BASE_URL}/api/users/verify/${newUser.id}/${newToken.token}`;
+    try {
+      await sendEmail(newUser.email, "Verify Email", message);
+    } catch (err) {
+      const error = new HttpError("Could not send verification email", 500);
+      return next(error);
+    }
+
+    res.json({
+      id: newUser.id,
+      message: "An email has been sent to your account. Please verify.",
+    });
   } catch (err) {
     const error = new HttpError("Could not create user, please try again", 500);
     return next(error);
   }
-
-  const newUser = {
-    id: crypto.randomUUID(),
-    name,
-    email,
-    password: hashedPassword,
-    questions: [],
-    verificationStatus: false,
-    dateJoined: Date.now(),
-  };
-
-  users.push(newUser);
-  const Token = {
-    userId: newUser.id,
-    token: crypto.randomBytes(32).toString("hex"),
-  };
-  tokens.push(Token);
-
-  const message = `${process.env.BASE_URL}/api/users/verify/${newUser.id}/${Token.token}`;
-  await sendEmail(newUser.email, "Verify Email", message);
-  res.json("An Email sent to your account please verify");
 };
 
-const verifingUser = (req, res) => {
+// const verifingUser = (req, res) => {
+//   try {
+//     const user = users.find((u) => u.id == req.params.id);
+//     if (!user) {
+//       const error = new HttpError("Invalid link.", 400);
+//       return next(error);
+//     }
+//     const token = tokens.find(
+//       (t) => t.userId == user.id && t.token == req.params.token
+//     );
+//     if (!token) {
+//       const error = new HttpError("Invalid link.", 400);
+//       return next(error);
+//     }
+
+//     const updatedUser = users.find((u) => u.id === user.id);
+//     if (updatedUser) {
+//       updatedUser.verificationStatus = true;
+//     }
+//     const tokenIndex = tokens.findIndex((t) => t.id === token.id);
+//     if (tokenIndex !== -1) {
+//       tokens.splice(tokenIndex, 1);
+//     }
+
+//     res.json("email verified sucessfully");
+//   } catch (err) {
+//     const error = new HttpError("verification failed", 500);
+//     return next(error);
+//   }
+// };
+const verifingUser = async (req, res, next) => {
+  const userId = req.params.id;
+  const tokenValue = req.params.token;
+
+  // Find the user by ID in the DB
+  let user;
   try {
-    const user = users.find((u) => u.id == req.params.id);
-    if (!user) {
-      const error = new HttpError("Invalid link.", 400);
-      return next(error);
-    }
-    const token = tokens.find(
-      (t) => t.userId == user.id && t.token == req.params.token
-    );
-    if (!token) {
-      const error = new HttpError("Invalid link.", 400);
-      return next(error);
-    }
-
-    const updatedUser = users.find((u) => u.id === user.id);
-    if (updatedUser) {
-      updatedUser.verificationStatus = true;
-    }
-    const tokenIndex = tokens.findIndex((t) => t.id === token.id);
-    if (tokenIndex !== -1) {
-      tokens.splice(tokenIndex, 1);
-    }
-
-    res.json("email verified sucessfully");
+    user = await User.findById(userId);
   } catch (err) {
-    const error = new HttpError("verification failed", 500);
+    const error = new HttpError("Error finding user.", 500);
     return next(error);
   }
+
+  if (!user) {
+    const error = new HttpError("Invalid link.", 400);
+    return next(error);
+  }
+
+  // Find the token in the DB
+  let token;
+  try {
+    token = await Token.findOne({ userId: user.id, token: tokenValue });
+  } catch (err) {
+    const error = new HttpError("Error finding token.", 500);
+    return next(error);
+  }
+
+  if (!token) {
+    const error = new HttpError("Invalid link.", 400);
+    return next(error);
+  }
+
+  // Update the user's verification status
+  try {
+    user.verificationStatus = true;
+    await user.save();
+  } catch (err) {
+    const error = new HttpError("Error updating user, verfication failed", 500);
+    return next(error);
+  }
+
+  // Delete the token from the database
+  try {
+    await Token.Token.findOneAndDelete({ _id: token._id });
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.json({ user: user.toObject(), message: "Email verified successfully" });
 };
 
 const login = async (req, res, next) => {
