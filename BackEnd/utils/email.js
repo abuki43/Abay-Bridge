@@ -22,6 +22,6 @@ const sendEmail = async (email, subject, text) => {
     console.log("email not sent");
     console.log(error);
   }
-};
+
 
 module.exports = sendEmail;

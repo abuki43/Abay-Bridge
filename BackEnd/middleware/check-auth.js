@@ -13,6 +13,7 @@ module.exports = (req, res, next) => {
       throw new HttpError("Authentication failed", 401);
     }
     const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    // check where user is verified ??
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {

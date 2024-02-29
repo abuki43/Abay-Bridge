@@ -8,6 +8,7 @@ const answerSchema = new Schema({
   question: { type: mongoose.Types.ObjectId, ref: "Question", required: true },
   upVote: { type: Number, default: 0 },
   downVote: { type: Number, default: 0 },
+  parentAnswer: { type: mongoose.Types.ObjectId, ref: "Question" },
 });
 
 exports.module = mongoose.model("Answer", answerSchema);
