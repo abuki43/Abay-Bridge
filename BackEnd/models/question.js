@@ -7,6 +7,7 @@ const questionSchema = new Schema({
   description: { type: String },
   date_posted: { type: Date, default: Date.now },
   answers: [{ type: mongoose.Types.ObjectId, ref: "Answer" }],
+  isEdited:{type:Boolean , default: false}
 });
 
 exports.module = mongoose.model("Question", questionSchema);

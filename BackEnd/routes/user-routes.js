@@ -8,6 +8,7 @@ const {
   login,
   verifingUser,
   myProfile,
+  myQuestions,
 } = require("../controllers/user-controller");
 
 router.post("/signup", signup);
@@ -19,5 +20,6 @@ router.post("/login", login);
 router.use(checkAuth);
 
 router.get("/me", myProfile);
+router.get("/myQuestions/:UID", myQuestions);
 
 module.exports = router;

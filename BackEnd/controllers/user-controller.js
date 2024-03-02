@@ -95,36 +95,6 @@ const signup = async (req, res, next) => {
   }
 };
 
-// const verifingUser = (req, res) => {
-//   try {
-//     const user = users.find((u) => u.id == req.params.id);
-//     if (!user) {
-//       const error = new HttpError("Invalid link.", 400);
-//       return next(error);
-//     }
-//     const token = tokens.find(
-//       (t) => t.userId == user.id && t.token == req.params.token
-//     );
-//     if (!token) {
-//       const error = new HttpError("Invalid link.", 400);
-//       return next(error);
-//     }
-
-//     const updatedUser = users.find((u) => u.id === user.id);
-//     if (updatedUser) {
-//       updatedUser.verificationStatus = true;
-//     }
-//     const tokenIndex = tokens.findIndex((t) => t.id === token.id);
-//     if (tokenIndex !== -1) {
-//       tokens.splice(tokenIndex, 1);
-//     }
-
-//     res.json("email verified sucessfully");
-//   } catch (err) {
-//     const error = new HttpError("verification failed", 500);
-//     return next(error);
-//   }
-// };
 const verifingUser = async (req, res, next) => {
   const userId = req.params.id;
   const tokenValue = req.params.token;
@@ -168,7 +138,7 @@ const verifingUser = async (req, res, next) => {
 
   // Delete the token from the database
   try {
-    await Token.Token.findOneAndDelete({ _id: token._id });
+    await Token.findOneAndDelete({ _id: token._id });
   } catch (err) {
     console.log(err);
   }
@@ -186,9 +156,9 @@ const login = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = users.find((user) => user.email === email);
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError("login  failed, please try again", 500);
+    const error = new HttpError("Login failed, please try again", 500);
     return next(error);
   }
 
@@ -205,7 +175,7 @@ const login = async (req, res, next) => {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (err) {
     const error = new HttpError(
-      "Could not log you in , please check your credentials and try again",
+      "Could not log you in, please check your credentials and try again",
       500
     );
     return next(error);
@@ -213,7 +183,7 @@ const login = async (req, res, next) => {
 
   if (!isValidPassword) {
     const error = new HttpError(
-      "Invalid credentials seem to be wrong, Could not log you in",
+      "Invalid credentials, could not log you in",
       401
     );
     return next(error);
@@ -228,9 +198,10 @@ const login = async (req, res, next) => {
     );
     console.log(token);
   } catch (err) {
-    const error = new HttpError("Signing up failed, try again.", 500);
+    const error = new HttpError("Signing up failed, please try again.", 500);
     return next(error);
   }
+
   res.status(201).json({
     userId: existingUser.id,
     email: existingUser.email,
@@ -238,13 +209,36 @@ const login = async (req, res, next) => {
     token: token,
   });
 };
-
-const myProfile = (req, res, next) => {
+const myProfile = async (req, res, next) => {
   let user;
+  try {
+    user = await User.findById(req.userData.userId).select("-password");
+  } catch (err) {
+    const error = new HttpError("Error finding user.", 500);
+    return next(error);
+  }
 
-  user = users.find((u) => u.id == req.userData.userId);
+  if (!user) {
+    const error = new HttpError("user not found", 400);
+    return next(error);
+  }
 
-  res.status(200).json({ user });
+  res.status(200).json({ user: user.toObject() });
 };
 
-module.exports = { signup, login, verifingUser, myProfile };
+const myQuestions = async (req, res, next) => {
+  const { UID } = req.params;
+
+  let questions;
+  try {
+    questions = await User.findById(UID).populate("questions");
+    res.json(questions);
+  } catch {
+    const error = new HttpError(
+      "finding your questions failed, please try again",
+      500
+    );
+    return next(error);
+  }
+};
+module.exports = { signup, login, verifingUser, myProfile, myQuestions };
