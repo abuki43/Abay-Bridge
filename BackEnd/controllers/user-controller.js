@@ -11,9 +11,6 @@ const {
   signupValidator,
 } = require("../validator/userValidator");
 
-const users = [];
-const tokens = [];
-
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
 
