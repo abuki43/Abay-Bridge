@@ -226,10 +226,10 @@ const myProfile = async (req, res, next) => {
 const myQuestions = async (req, res, next) => {
   const { UID } = req.params;
 
-  let questions;
+  let user;
   try {
-    questions = await User.findById(UID).populate("questions");
-    res.json(questions);
+    user = await User.findById(UID).populate("questions");
+    res.json(user.questions);
   } catch {
     const error = new HttpError(
       "finding your questions failed, please try again",

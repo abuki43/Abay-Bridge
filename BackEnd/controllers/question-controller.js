@@ -41,6 +41,7 @@ const newQuestion = async (req, res, next) => {
     description: description,
     answers: [],
     date_posted: Date.now(),
+    author: userId,
   });
 
   let sess;
@@ -52,8 +53,13 @@ const newQuestion = async (req, res, next) => {
     await user.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
+    console.log(err);
     const error = new HttpError("Failed creating new question", 500);
     return next(error);
+  } finally {
+    if (sess) {
+      sess.endSession();
+    }
   }
 
   res
@@ -66,6 +72,7 @@ const editQuestion = async (req, res, next) => {
 
   const { error } = questionValidator(req.body);
   if (error) {
+    console.log(error);
     return next(new HttpError(error.details[0].message, 422));
   }
 
@@ -86,7 +93,6 @@ const editQuestion = async (req, res, next) => {
     const error = new HttpError("could not find question for this id.", 404);
     return next(error);
   }
-
   // if (question.author.toString() !== req.userData.userId) {
   //   const error = new HttpError("You are not allowed to edit this question.", 401);
   //   return next(error);
@@ -94,6 +100,7 @@ const editQuestion = async (req, res, next) => {
 
   question.title = title;
   question.description = description;
+  question.isEdited = true;
 
   try {
     await question.save();
@@ -104,13 +111,12 @@ const editQuestion = async (req, res, next) => {
 
   res.status(200).json({ question: question.toObject() });
 };
-
 const deleteQuestion = async (req, res, next) => {
   const QID = req.params.QID;
   let question;
 
   try {
-    question = await Question.findById(QID);
+    question = await Question.findById(QID).populate("author");
   } catch {
     const error = new HttpError(
       "finding question for deleteing failed, try again.",
@@ -134,7 +140,7 @@ const deleteQuestion = async (req, res, next) => {
     sess = await mongoose.startSession();
     sess.startTransaction();
     await Question.findOneAndDelete({ _id: QID }, { session: sess });
-    question.author.questions.pull(place);
+    question.author.questions.pull(question);
     await question.author.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
