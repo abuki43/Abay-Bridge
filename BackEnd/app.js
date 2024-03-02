@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/questions", questionRoutes);
-app.use("api/answer", answerRoutes);
+app.use("/api/answer", answerRoutes);
 
 app.use((req, res, next) => {
   const error = new httpError("Could not find this route", 404);

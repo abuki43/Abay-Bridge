@@ -46,7 +46,6 @@ const postAnswer = async (req, res, next) => {
 
   const newAnswer = new Answer({
     content: content,
-    date_posted: date.now(),
     author: user._id,
     question: question._id,
   });
@@ -64,30 +63,26 @@ const postAnswer = async (req, res, next) => {
 };
 
 const getAnswers = async (req, res, next) => {
-  const getAnswers = async (req, res) => {
-    const { QID } = req.params;
+  const { QID } = req.params;
 
-    try {
-      const question = await Question.findById(QID).populate("answers");
+  try {
+    const question = await Question.findById(QID).populate("answers");
 
-      if (!question) {
-        const error = new HttpError("Could not find a question.", 404);
-        return next(error);
-      }
-
-      const answers = question.answers;
-
-      res.status(200).json({ answers });
-    } catch (err) {
-      const error = new HttpError(
-        "Failed finding answers , please try again.",
-        500
-      );
+    if (!question) {
+      const error = new HttpError("Could not find a question.", 404);
       return next(error);
     }
-  };
 
-  module.exports = getAnswers;
+    const answers = question.answers;
+
+    res.status(200).json({ answers });
+  } catch (err) {
+    const error = new HttpError(
+      "Failed finding answers , please try again.",
+      500
+    );
+    return next(error);
+  }
 };
 
 module.exports = { postAnswer, getAnswers };
