@@ -1,0 +1,47 @@
+.navbar-container{
+    width:100%;
+    background-color:var(--color-w2);
+    padding: var(--pad-6)  var(--pad-10);
+    margin: 0;
+}
+
+.navbar-container header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo{
+    width: 70px;
+    height: 60px;
+}
+
+.nav-menus-lists{
+    display: flex;
+    gap: 40px;
+}
+li{
+    color: var(--color-g5);
+    margin-right: 10px;
+}
+
+.nav-buttons>*{
+    margin-left: 10px;
+}
+
+
+.sideBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width:55%;
+    height: 100vh;
+    background-color: var(--color-w3);
+    box-shadow: 1px 2px 7px rgba(0, 0, 0, .3);
+    transition: all .2s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+
+
+
