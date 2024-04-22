@@ -1,4 +1,4 @@
-import react from 'react'
+// import react from 'react'
 import LandingPage from './pages/LandingPage/LandingPage';
 
 

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 import {GiHamburgerMenu} from 'react-icons/gi'
-import {IoMdCloseCircleOutline} from 'react-icons/io'
+// import {IoMdCloseCircleOutline} from 'react-icons/io'
 import Button from '../../UIElements/Button/Button'
 import BackDrop from '../../UIElements/BackDrop/BackDrop'
 
@@ -23,7 +23,7 @@ const NavBar = () => {
     <div className='navbar-container'>
       <header>
             <div className='nav-logo'>
-                <img src=''/>
+                <img src='' alt='logo'/>
             </div>
             <div className='nav-menus mob-hide'>
                 <ul className='nav-menus-lists'>
@@ -41,16 +41,17 @@ const NavBar = () => {
               <GiHamburgerMenu/>
             </div>
         </header>
-        <SideBar/>
     </div>
-    {isSideBarOpen && (<><BackDrop onClick={closeSideBar}/><SideBar/></>)}
+    <SideBar isOpen={isSideBarOpen}/>
+    {isSideBarOpen && (<><BackDrop onClick={closeSideBar}/></>)}
     </>
   )
 }
 
-const SideBar=()=>{
+const SideBar=({isOpen})=>{
+  return(
   <>
-  <aside className='sideBar'>
+  <aside className={`sideBar ${isOpen ? 'open' : ''}`}>
     <Button>Ask question</Button>
     <div className='mobile-menus'>
       <ul className='mobile-menu-lists'>
@@ -63,6 +64,7 @@ const SideBar=()=>{
     </div>
   </aside>
   </>
+  )
 }
 
 export default NavBar

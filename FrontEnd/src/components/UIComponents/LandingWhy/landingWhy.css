@@ -1,0 +1,38 @@
+.landing-why{
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+    color: #2e3d49;
+}
+
+h2{
+    color:#2e3d49;
+    font-size: 48px;
+}
+span{
+    color: var(--color-b2);
+}
+
+.why-container{
+    padding: 3rem 4rem;
+    width: 100%;
+    background-color: #edf1ff;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.why-list h3{
+    font-size: 32px;
+    margin-bottom: 14px;
+}
+
+.why-list p{
+    font-size: 17px;
+}
+
+
+
+
+

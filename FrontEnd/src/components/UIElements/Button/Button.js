@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom'
 import './button.css'
 
 const Button = (props) => {
-   const padStyle = {
-    padding : `0.6rem ${props.pad}rem`,
-    height:'35px'
-   }
+    const padStyle = {
+        padding: `${props.padB ? props.padB + "rem" : "0.6rem"} ${props.padI}rem`,
+        height: '35px'
+    };
 
 
   if(props.to){
