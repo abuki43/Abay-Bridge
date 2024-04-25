@@ -1,41 +1,45 @@
-.button{
-    padding:0.6rem 1.6rem;
-    border-radius: 6px;
-    background-color: var(--color-b3);
-    font: inherit;
-    cursor: pointer ;
-    text-decoration: none;
-    color: white;
-    border: 0;
-    box-shadow: 0;
-    height:32px;
-    box-sizing: content-box;
+.button {
+  padding: 0.6rem 1.6rem;
+  border-radius: 6px;
+  background-color: var(--color-b3);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  border: 0;
+  box-shadow: 0;
+  height: 32px;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
-.button-black{
+.button-black {
   background-color: var(--color-g5);
-  color:white;
-  border:1px solidrgb(0, 0, 0)e;
+  color: white;
+  border: 1px solidrgb(0, 0, 0) e;
 }
 
-.button-danger{
+.button-danger {
   background-color: #bb1717;
-  color:var(--color-w3);
+  color: var(--color-w3);
 }
 .button-blue {
   background-color: var(--color-b2);
   color: var(--color-w4);
 }
 
-.button-inverse{
+.button-inverse {
   background-color: var(--color-w4);
   color: var(--color-g5);
 }
 
-.button-transparent{
+.button-transparent {
   background-color: transparent;
   color: white;
   border-color: white;
-  border:1px solid white;
-  padding: .55rem 1.6rem;
+  border: 1px solid white;
+  padding: 0.55rem 1.6rem;
 }

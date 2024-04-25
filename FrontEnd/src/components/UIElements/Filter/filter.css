@@ -1,0 +1,133 @@
+.filter-options {
+  width: auto;
+  padding-inline: 2rem;
+  height: auto;
+  background-color: var(--color-w2);
+  border-radius: 5px;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  transform: translateX(-100%);
+  z-index: 100;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.filter-options.open {
+  display: flex;
+  transform: translateX(0%);
+}
+
+.mobFilterClose {
+  position: absolute;
+  top: 1rem;
+  right: -3rem;
+  color: var(--color-danger);
+  border: none;
+  font-size: 40px;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.filter-icon {
+  font-size: 1.8em;
+  margin-right: 12px;
+  color: #007791; /* Udemy blue */
+}
+
+.filter-title {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: #333; /* Dark gray text */
+}
+
+.filter-section {
+  margin-bottom: 10px;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.filter-section-title {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #333;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.filter-section-title svg {
+  font-size: 1.3em;
+  margin-right: 8px;
+}
+
+.filter-checkbox-group {
+  padding-left: 25px;
+  margin-top: 10px;
+}
+
+.filter-checkbox-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95em;
+  color: #555; /* Slightly lighter gray text */
+}
+
+.filter-checkbox {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.show-more-button,
+.apply-filters-button {
+  background-color: #007791;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.show-more-button:hover,
+.apply-filters-button:hover {
+  background-color: #005669;
+}
+
+.filter-action {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Animation for smooth collapse/expand */
+.filter-section > div {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.filter-section > div[hidden] {
+  max-height: 0;
+}
+
+@media (min-width: 950px) {
+  .filter-options {
+    transform: translate(0%);
+    position: inherit;
+    display: flex;
+    width: 20%;
+    padding-inline: 0rem;
+    background-color: inherit;
+  }
+}

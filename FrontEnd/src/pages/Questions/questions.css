@@ -1,0 +1,14 @@
+.questionsPage {
+  width: 100%;
+}
+.questionsPage .header {
+  text-align: center;
+  margin-block: 2rem;
+  font-size: 32px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.questionsContainer {
+  padding-inline: 2rem;
+}
