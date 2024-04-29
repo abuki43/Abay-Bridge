@@ -40,7 +40,7 @@ const LandingWhy = () => {
             <h3>Enhanced Understanding</h3>
             <p>
               Gain deeper insights through interactive Q&A sessions with fellow
-              learners.
+              learners and collaborate with others.
             </p>
           </div>
         </div>

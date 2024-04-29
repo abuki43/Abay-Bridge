@@ -38,7 +38,7 @@ const NavBar = () => {
             <Button color="inverse">Login</Button>
           </div>
 
-          <div className="sidebar-opener desk-hide" onClick={openSideBar}>
+          <div className="hamburger desk-hide" onClick={openSideBar}>
             <GiHamburgerMenu />
           </div>
         </header>
@@ -58,7 +58,7 @@ const SideBar = ({ isOpen, close }) => {
     <>
       <aside className={`sideBar desk-hide ${isOpen ? "open" : ""}`}>
         <div className="mobile-menus">
-          <button className="asideCloseBtn" onClick={close}>
+          <button className="asideCloseBtn " onClick={close}>
             <IoMdCloseCircleOutline />
           </button>
           <ul className="mobile-menu-lists">

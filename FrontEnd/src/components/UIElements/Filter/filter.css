@@ -1,5 +1,5 @@
 .filter-options {
-  width: auto;
+  width: 47%;
   padding-inline: 2rem;
   height: auto;
   background-color: var(--color-w2);
@@ -11,6 +11,8 @@
   z-index: 100;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
+
   transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 .filter-options.open {
@@ -20,8 +22,8 @@
 
 .mobFilterClose {
   position: absolute;
-  top: 1rem;
-  right: -3rem;
+  top: 0rem;
+  right: 0rem;
   color: var(--color-danger);
   border: none;
   font-size: 40px;
@@ -74,6 +76,7 @@
 
 .filter-checkbox-group {
   padding-left: 25px;
+  padding-right: 10px;
   margin-top: 10px;
 }
 
@@ -85,7 +88,7 @@
 }
 
 .filter-checkbox {
-  margin-right: 5px;
+  margin-right: 10px;
   vertical-align: middle;
 }
 
@@ -120,6 +123,30 @@
 .filter-section > div[hidden] {
   max-height: 0;
 }
+/* check box style */
+.filter-options input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.filter-options input[type="checkbox"]::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.filter-options input[type="checkbox"]:checked::before {
+  background-color: #81c0c0;
+  background-size: 70%; /* Fill 70% of the circle */
+  background-repeat: no-repeat;
+  background-position: center; /* Center the fill */
+}
 
 @media (min-width: 950px) {
   .filter-options {
@@ -127,6 +154,7 @@
     position: inherit;
     display: flex;
     width: 20%;
+    height: auto;
     padding-inline: 0rem;
     background-color: inherit;
   }

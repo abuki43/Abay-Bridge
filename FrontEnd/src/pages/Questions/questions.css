@@ -3,12 +3,25 @@
 }
 .questionsPage .header {
   text-align: center;
+  margin: auto;
   margin-block: 2rem;
-  font-size: 32px;
+  width: 100%;
+
+  font-size: 27px;
   color: var(--color-text);
   font-weight: 600;
 }
 
 .questionsContainer {
   padding-inline: 2rem;
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.listOfQuestions {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

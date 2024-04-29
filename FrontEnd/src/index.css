@@ -29,7 +29,7 @@ li {
 .desk-hide {
   display: flex;
 }
-@media (min-width: 950px) {
+@media (min-width: 860px) {
   .mob-hide {
     display: flex;
   }

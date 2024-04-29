@@ -69,9 +69,9 @@ function FilterOptions({
   return (
     <>
       <div className="desk-hide">
-        <Button color="black" onClick={ShowFilterMobile}>
+        <Button color="filter" padI="0" onClick={ShowFilterMobile}>
           <FaFilter className="filter-mob-icon" />
-          Filter
+          {/* Filter */}
         </Button>
       </div>
 

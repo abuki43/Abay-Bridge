@@ -1,19 +1,21 @@
 .button {
-  padding: 0.6rem 1.6rem;
+  padding: 0.6rem 0.2rem;
   border-radius: 6px;
   background-color: var(--color-b3);
   font: inherit;
+  font-size: 20px;
   cursor: pointer;
   text-decoration: none;
   color: white;
   border: 0;
   box-shadow: 0;
-  height: 32px;
+  height: 28px;
   box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+  width: 120px;
 }
 
 .button-black {
@@ -42,4 +44,16 @@
   border-color: white;
   border: 1px solid white;
   padding: 0.55rem 1.6rem;
+}
+
+.button-filter {
+  background-color: var(--color-g5);
+  width: 40px;
+  height: 12px;
+  border-end-start-radius: 20px;
+  border-end-end-radius: 20px;
+  position: relative;
+  left: -1rem;
+  top: -2.8rem;
+  z-index: 10;
 }

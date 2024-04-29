@@ -1,7 +1,7 @@
 .navbar-container {
   width: 100%;
   background-color: var(--color-w2);
-  padding: var(--pad-6) var(--pad-10);
+  padding: var(--pad-3) var(--pad-8);
   margin: 0;
 }
 
@@ -11,9 +11,9 @@
   align-items: center;
 }
 
-header .logo {
-  width: 70px;
-  height: 60px;
+header .nav-logo {
+  width: 3.5rem;
+  height: 4rem;
 }
 
 .nav-menus-lists {
@@ -29,19 +29,24 @@ li {
   margin-left: 10px;
 }
 
+.hamburger svg {
+  width: 3.2rem;
+  height: 2rem;
+}
+
 .sideBar {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 100;
   width: 55%;
   height: 100vh;
   background-color: var(--color-w3);
   box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
   transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-  transform: translateX(-100%);
+  transform: translateX(100%);
   display: flex;
-  box-shadow: 4px 3px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 3px 8px #00000066;
   border-radius: 4px;
 }
 
@@ -52,31 +57,34 @@ li {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-inline-start: 3rem;
   padding-top: 7rem;
+  width: 100%;
 }
 
 .asideCloseBtn {
   position: absolute;
-  top: 3rem;
-  left: 3rem;
+  top: 0.3rem;
+  left: 0.5rem;
   color: var(--color-danger);
   border: none;
   font-size: 40px;
+  background: transparent;
+  cursor: pointer;
 }
 .mobile-menu-lists {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 0;
   margin: 0;
-  margin-bottom: 2.4rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--color-text);
 }
 
 .mobile-menu-lists li {
-  font-size: 1.2rem;
-  padding: 1rem;
+  font-size: 1.4rem;
+  padding: 10px 20px;
 }
 
 .mobile-menu-lists li:hover {
@@ -86,8 +94,10 @@ li {
 
 .aside-Buttons {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 0.7rem;
   margin-top: 2rem;
+  padding-left: 15px;
 }
 /* .mobile-menu-lists Button {
   margin-top: 1rem;
@@ -104,3 +114,14 @@ li {
   background-color: var(--color-w2);
   cursor: pointer;
 } */
+
+@media (min-width: 600px) {
+  .sideBar {
+    width: 45%;
+  }
+}
+@media (min-width: 1000px) {
+  .navbar-container {
+    padding: var(--pad-3) var(--pad-10);
+  }
+}

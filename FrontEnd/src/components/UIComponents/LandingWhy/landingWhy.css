@@ -7,56 +7,75 @@
 
 .landing-why h2 {
   color: #2e3d49;
-  font-size: 47px;
-  margin-bottom: 55px;
+  font-size: 26px;
+  margin-bottom: 30px;
 }
 span {
   color: var(--color-b2);
 }
 
 .why-container {
-  padding: 3rem 4rem;
+  padding: 3rem 1rem;
   width: 100%;
   background-color: #edf1ff;
   text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 40px;
 }
 
 .why-container .img-container {
-  width: 80%;
+  width: 100%;
+  align-self: center;
+  overflow: hidden;
 }
 
 .img-container img {
   width: 100%;
+  height: auto;
+  max-height: 800px;
 }
 
 .why-lists {
-  width: 80%;
+  width: 100%;
+  align-items: flex-start;
+  padding-left: 15px;
 }
 
 .why-list h3 {
-  font-size: 32px;
-  margin-bottom: 14px;
+  font-size: 22px;
+  margin-bottom: 9px;
+  color: rgb(70, 66, 66);
 }
 
 .why-list p {
   font-size: 17px;
+  color: var(--color-g1);
 }
 
-@media (min-width: 950px) {
+@media (min-width: 789px) {
+  .landing-why h2 {
+    font-size: 33px;
+  }
   .why-container {
     justify-content: center;
     flex-direction: row;
     gap: 6rem;
+    align-items: center;
   }
   .why-container .img-container {
     width: 50%;
+    max-height: 850px;
+  }
+  .why-list h3 {
+    font-size: 26px;
+  }
+  .why-list p {
+    font-size: 22px;
   }
   .why-lists {
     width: 50%;
   }
+}
+@media (min-width: 769px) {
 }
