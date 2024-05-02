@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import Button from "../../UIElements/Button/Button";
@@ -34,7 +34,9 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="nav-buttons mob-hide">
-            <Button color="black">Ask question</Button>
+            <Button color="black" padI="1.1">
+              Ask question
+            </Button>
             <Button color="inverse">Login</Button>
           </div>
 
@@ -64,7 +66,7 @@ const SideBar = ({ isOpen, close }) => {
           <ul className="mobile-menu-lists">
             <li>Question</li>
             <li>Categories</li>
-            <li>Profile</li>
+            <Link to="/profile">Profile</Link>
           </ul>
           <div className="aside-Buttons">
             <Button>login/signup</Button>

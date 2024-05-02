@@ -13,15 +13,26 @@
 }
 
 .questionsContainer {
-  padding-inline: 2rem;
+  padding-inline: 1rem;
   position: relative;
   display: flex;
   width: 100%;
 }
 
 .listOfQuestions {
-  width: 70%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  justify-self: center;
+}
+
+@media (min-width: 960px) {
+  .listOfQuestions {
+    width: 70%;
+  }
+  .questionsContainer {
+    padding-inline: 2rem;
+  }
 }

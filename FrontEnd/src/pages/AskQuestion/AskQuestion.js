@@ -20,66 +20,81 @@ const AskQuestion = () => {
   };
 
   return (
-    <div className="AskQuestionPage">
+    <>
       <NavBar />
-
-      <div className="form-container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            placeholder="Title"
-            {...register("Title", { required: true, max: 80, min: 2 })}
-          />
-          {errors.Title && <span>Title is required.</span>}
-
-          <input
-            type="text"
-            placeholder="Description"
-            {...register("Description", { required: true, max: 300 })}
-          />
-          {errors.Description && <span>Description is required.</span>}
-
-          <select {...register("Level")}>
-            <option value="Primary School">Primary School</option>
-            <option value="Secondary School">Secondary School</option>
-            <option value="Universiy/College">Universiy/College</option>
-            <option value="other">Other</option>
-          </select>
-
-          <select {...register("Subject")}>
-            <option value="Accounting">Accounting</option>
-            <option value="IT">IT</option>
-            <option value="Maths">Maths</option>
-            <option value="Science">Science</option>
-            <option value="Medicine">Medicine</option>
-            <option value="Other">Other</option>
-          </select>
-
-          <div className="image-upload-container">
-            <label className="image-upload-button">
+      <div className="AskQuestionPage">
+        <div className="form-container">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="formGroup">
+              <label htmlFor="title">Title</label>
               <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setSelectedImage(URL.createObjectURL(e.target.files[0]))
-                }
+                id="title"
+                type="text"
+                placeholder="Title"
+                {...register("Title", { required: true, max: 80, min: 2 })}
               />
-              Upload Image
-            </label>
-            {selectedImage && (
-              <img
-                className="selected-image"
-                src={selectedImage}
-                alt="Selected"
-              />
-            )}
-          </div>
+              {errors.Title && <span>Title is required.</span>}
+            </div>
 
-          <Button>Submit Question</Button>
-        </form>
+            <div className="formGroup">
+              <label htmlFor="description">Description</label>
+              <textarea
+                type="text"
+                id="description"
+                placeholder="Description"
+                {...register("Description", { required: true, max: 300 })}
+              />
+              {errors.Description && <span>Description is required.</span>}
+            </div>
+
+            <div className="formGroup">
+              <label htmlFor="level">Level</label>
+              <select {...register("Level")} id="level">
+                <option value="Primary School">Primary School</option>
+                <option value="Secondary School">Secondary School</option>
+                <option value="Universiy/College">Universiy/College</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div className="formGroup">
+              <label htmlFor="subject">Subject</label>
+              <select {...register("Subject")} id="subject">
+                <option value="Accounting">Accounting</option>
+                <option value="IT">IT</option>
+                <option value="Maths">Maths</option>
+                <option value="Science">Science</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div className="image-upload-container">
+              <label className="image-upload-button">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) =>
+                    setSelectedImage(URL.createObjectURL(e.target.files[0]))
+                  }
+                />
+                Upload Image
+              </label>
+              {selectedImage && (
+                <div className="selectImageContainer">
+                  <img src={selectedImage} alt="Selected" />
+                </div>
+              )}
+            </div>
+
+            <Button color="black" wid="150">
+              Submit Question
+            </Button>
+          </form>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

@@ -2,28 +2,49 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100vh;
+  padding: 2rem 2rem;
 }
 
-.form-container {
+.AskQuestionPage .form-container {
   width: 100%;
-  max-width: 500px;
-  padding: 20px;
+  padding: 28px 40px;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 50px;
 }
-
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
 input[type="text"],
 select {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
+  padding: 18px 16px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
 }
 
-span {
+/* .image-upload-button input[type="file"] {
+  display: none; 
+} */
+textarea {
+  width: 100%;
+  max-width: 100%;
+  height: 130px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.AskQuestionPage span {
   color: red;
   display: block;
   margin-bottom: 20px;
@@ -32,6 +53,7 @@ span {
 .image-upload-container {
   width: 100%;
   margin-bottom: 20px;
+  padding-block: 1.4rem;
 }
 
 .image-upload-button {
@@ -46,22 +68,23 @@ span {
   border: 2px dashed #0074d9;
 }
 
-.selected-image {
+.selectImageContainer {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 20px;
+}
+
+.selectImageContainer img {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
-/* Styles for submit button */
-button {
-  padding: 10px 15px;
-  background-color: #000080;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #005ea6;
+@media (min-width: 780px) {
+  .AskQuestionPage .form-container {
+    width: 750px;
+  }
 }

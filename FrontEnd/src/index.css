@@ -29,11 +29,17 @@ li {
 .desk-hide {
   display: flex;
 }
+.desk-hide-inline {
+  display: inline;
+}
 @media (min-width: 860px) {
   .mob-hide {
     display: flex;
   }
   .desk-hide {
+    display: none;
+  }
+  .desk-hide-inline {
     display: none;
   }
 }

@@ -1,11 +1,12 @@
 .card-container {
   width: 100%;
-  min-width: 350px;
+  min-width: 330px;
+  max-width: 800px;
   margin: 0 4px;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  padding: 10px;
   position: relative;
 }
 
@@ -73,7 +74,7 @@
 .card-footer {
   display: flex;
   justify-content: space-around;
-  margin-top: 16px;
+  margin-block: 16px;
 }
 
 .like-btn,
@@ -100,31 +101,32 @@
 }
 
 .comment-section {
-  margin-top: 22px;
+  margin-top: 30px;
   padding-inline: 11px;
+  height: 50px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
+  font-size: 16px;
 }
 
 .comment-input {
-  width: 100%;
-  max-width: 480px;
+  height: 100%;
+  max-width: 530px;
   padding: 14px 16px;
   border-radius: 4px;
   border: 1px solid #cccccc;
   margin-right: 8px;
-  font-size: 14px;
 }
 
 .send-btn {
-  padding: 14px 16px;
+  height: 100%;
+
   border-radius: 4px;
   background-color: #4f46e5;
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 14px;
 }
 
 .send-btn:hover {
@@ -133,6 +135,9 @@
 
 @media (min-width: 950px) {
   .card-container {
-    width: 70%;
+    padding: 16px;
+  }
+  .send-btn {
+    padding-inline: 16px;
   }
 }

@@ -50,7 +50,7 @@ const Questions = () => {
     <div className="questionsPage">
       <NavBar />
       <QuestionsHero />
-      <h2 className="header">Questions</h2>
+
       <div className="questionsContainer">
         <FilterOptions
           levels={levels}
@@ -60,6 +60,7 @@ const Questions = () => {
           onApplyFilters={handleApplyFilters}
         />
         <div className="listOfQuestions">
+          <h2 className="header">Questions</h2>
           <Card data={data} />
         </div>
       </div>

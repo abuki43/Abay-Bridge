@@ -1,5 +1,5 @@
 .filter-options {
-  width: 47%;
+  width: 67%;
   padding-inline: 2rem;
   height: auto;
   background-color: var(--color-w2);
@@ -22,11 +22,11 @@
 
 .mobFilterClose {
   position: absolute;
-  top: 0rem;
-  right: 0rem;
+  top: 0.75rem;
+  right: 1rem;
   color: var(--color-danger);
   border: none;
-  font-size: 40px;
+  font-size: 37px;
 }
 
 .filter-header {
@@ -34,7 +34,7 @@
   align-items: center;
   gap: 10px;
   text-align: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 25px;
 }
 

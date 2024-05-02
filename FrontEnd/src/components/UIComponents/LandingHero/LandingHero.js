@@ -14,7 +14,7 @@ const LandingHero = () => {
           <Link to="/Signup">Get started</Link>
         </Button>
         <Button color="transparent" padI="4.4" padB="0.54">
-          Guest mode
+          <Link to="/questions">Guest mode</Link>
         </Button>
       </div>
     </div>

@@ -43,13 +43,13 @@ span {
 }
 
 .why-list h3 {
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 9px;
   color: rgb(70, 66, 66);
 }
 
 .why-list p {
-  font-size: 17px;
+  font-size: 15px;
   color: var(--color-g1);
 }
 

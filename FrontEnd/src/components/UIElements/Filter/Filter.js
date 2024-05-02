@@ -63,12 +63,12 @@ function FilterOptions({
   };
 
   const handleShowMoreSubjects = () => {
-    setShowAllSubjects(true);
+    setShowAllSubjects((prev) => !prev);
   };
 
   return (
     <>
-      <div className="desk-hide">
+      <div className="desk-hide-inline ">
         <Button color="filter" padI="0" onClick={ShowFilterMobile}>
           <FaFilter className="filter-mob-icon" />
           {/* Filter */}
@@ -136,12 +136,12 @@ function FilterOptions({
                     {subject}
                   </label>
                 ))}
-              {subjects.length > 5 && !showAllSubjects && (
+              {subjects.length > 5 && (
                 <button
                   className="show-more-button"
                   onClick={handleShowMoreSubjects}
                 >
-                  Show More
+                  {showAllSubjects ? "show-less" : "show-more"}
                 </button>
               )}
             </div>

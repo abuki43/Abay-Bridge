@@ -59,8 +59,16 @@ label {
   margin-bottom: 5px;
 }
 
+.formGroup input[type="text"],
+.formGroup input[type="tel"],
+.formGroup input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .signupPage input,
-select {
+select,
+.editProfilePage input {
   width: 100%;
   padding-left: 10px;
   padding-block: 15px; /* Increase the size of the inputs */
