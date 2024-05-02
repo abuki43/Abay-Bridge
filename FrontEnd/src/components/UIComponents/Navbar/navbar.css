@@ -41,7 +41,8 @@ li {
   z-index: 100;
   width: 55%;
   height: 100vh;
-  background-color: var(--color-w3);
+  background-color: rgb(253, 254, 254);
+
   box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
   transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
   transform: translateX(100%);

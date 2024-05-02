@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import questionImage from "../../../assets/image 3.png";
 import "./card.css";
 
 const Card = (props) => {
@@ -7,12 +8,20 @@ const Card = (props) => {
     username,
     timestamp,
     location,
-    postText,
+    subject,
+    title,
+    description,
     postImage,
     likes,
-    comments,
+    answers,
     shares,
   } = props.data;
+
+  const [isDescripExpanded, setIsDescripExpanded] = useState(false);
+
+  const toggleDescrip = () => {
+    setIsDescripExpanded((prev) => !prev);
+  };
 
   return (
     <div className="card-container">
@@ -27,7 +36,7 @@ const Card = (props) => {
             {username}
           </a>
           <p className="timestamp">
-            {timestamp} • {location}
+            {timestamp} • {subject} • {location}
           </p>
         </div>
         <img
@@ -37,11 +46,23 @@ const Card = (props) => {
         />
       </div>
       <div className="content">
-        <div className="post-text">
-          <p>{postText}</p>
+        <div className="post-title">
+          <p>{title}</p>
         </div>
+
+        <div className="post-description">
+          <p>
+            {isDescripExpanded ? description : description.slice(0, 150)}
+            {description.length > 150 && (
+              <span onClick={toggleDescrip}>
+                {!isDescripExpanded ? "... More" : "Less"}
+              </span>
+            )}
+          </p>
+        </div>
+
         <div className="image-container">
-          <img src={postImage} alt={postImage} className="post-image" />
+          <img src={questionImage} alt={postImage} className="post-image" />
         </div>
       </div>
       <div className="card-footer">
@@ -59,7 +80,7 @@ const Card = (props) => {
             alt="icon"
             className="icon"
           />
-          <p className="comment-count">{comments}</p>
+          <p className="comment-count">{answers}</p>
         </span>
         <span className="share-btn">
           <img

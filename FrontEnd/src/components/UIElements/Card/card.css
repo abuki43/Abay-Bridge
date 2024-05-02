@@ -3,7 +3,7 @@
   min-width: 330px;
   max-width: 800px;
   margin: 0 4px;
-  background-color: white;
+  background-color: rgb(253, 254, 254);
   border-radius: 16px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -38,7 +38,7 @@
 }
 
 .timestamp {
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 0;
   color: #777777;
 }
@@ -55,11 +55,14 @@
   padding: 0 16px;
 }
 
-.post-text {
+/* .post-text {
   text-align: justify;
   font-size: 17px;
+} */
+.post-title {
+  font-size: 18px;
+  font-weight: bolder;
 }
-
 .image-container {
   margin-top: 16px;
   border-radius: 11px;

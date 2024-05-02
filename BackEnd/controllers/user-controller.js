@@ -144,6 +144,7 @@ const verifingUser = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log(req.body);
   const { error } = loginValidator(req.body);
   if (error) {
     return next(new HttpError(error.details[0].message, 422));

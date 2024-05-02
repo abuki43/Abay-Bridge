@@ -22,6 +22,7 @@
 }
 .button > a {
   padding: 0;
+  margin: 0;
 }
 .button-black {
   background-color: var(--color-g5);

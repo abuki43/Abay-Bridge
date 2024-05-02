@@ -64,13 +64,17 @@ const SideBar = ({ isOpen, close }) => {
             <IoMdCloseCircleOutline />
           </button>
           <ul className="mobile-menu-lists">
-            <li>Question</li>
+            <Link to="/questions">Questions</Link>
             <li>Categories</li>
             <Link to="/profile">Profile</Link>
           </ul>
           <div className="aside-Buttons">
-            <Button>login/signup</Button>
-            <Button color="black">Ask question</Button>
+            <Button>
+              <Link to="/signup">login/signup</Link>
+            </Button>
+            <Button color="black">
+              <Link to="/ask">Ask question</Link>
+            </Button>
           </div>
         </div>
       </aside>

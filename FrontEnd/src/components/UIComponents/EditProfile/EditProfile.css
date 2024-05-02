@@ -3,8 +3,10 @@
   padding-top: 3rem;
   padding-bottom: 2rem;
   align-items: center;
-  background-color: var(--color-w1);
   color: var(--color-text);
+  background-color: rgb(253, 254, 254);
+  border-radius: 16px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 .profileImageContainer {
   margin-bottom: 20px;

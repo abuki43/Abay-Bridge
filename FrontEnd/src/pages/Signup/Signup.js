@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, setError } from "react-hook-form";
+import API from "../../utils/API";
+import useHttp from "../../utils/http-hook";
 
 import Button from "../../components/UIElements/Button/Button";
 import Footer from "../../components/UIComponents/Footer/Footer";
@@ -8,14 +10,48 @@ import "./signup.css";
 
 const Signup = ({ state }) => {
   const [isSignUp, setIsSignUp] = useState(false || state);
-
+  const customhttp = useHttp();
   const {
     register,
+    setError,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+
+  const password = watch("password");
+
+  const onSubmit = async (data) => {
+    console.log("clicked on signuup/login page");
+    if (isSignUp) {
+      if (data.password !== data.confirmPassword) {
+        console.log("confirm password mismatched");
+        setError("confirmPassword", {
+          type: "manual",
+          message: "Passwords do not match",
+        });
+        return;
+      }
+      try {
+        const { isLoading, error, response } = await API.signUp(data, {
+          ...customhttp,
+        });
+        console.log(error, isLoading, response);
+      } catch (error) {
+        console.log("Error signing up:", error.message);
+      }
+    } else {
+      try {
+        const loginData = { email: data.email, password: data.password };
+        const { isLoading, error, response } = await API.login(loginData, {
+          ...customhttp,
+        });
+        console.log(error, isLoading, response);
+      } catch (error) {
+        console.log("Error signing up:", error.message);
+      }
+    }
+  };
 
   const changeSignup = () => {
     setIsSignUp((prev) => !prev);
@@ -147,9 +183,7 @@ const Signup = ({ state }) => {
                       className={errors.confirmPassword ? "error" : ""}
                     />
                     {errors.confirmPassword && (
-                      <p className="errorMessage">
-                        Password must be between 6 and 25 characters
-                      </p>
+                      <p className="errorMessage">Passwords do not match</p>
                     )}
                   </div>
                 </div>
