@@ -17,11 +17,15 @@
   gap: 5px;
   width: 120px;
 }
-
+.button > * {
+  width: 100%;
+}
+.button > a {
+  padding: 0;
+}
 .button-black {
   background-color: var(--color-g5);
   color: white;
-  border: 1px solidrgb(0, 0, 0) e;
 }
 
 .button-danger {

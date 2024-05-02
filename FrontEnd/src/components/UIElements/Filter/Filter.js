@@ -17,7 +17,7 @@ function FilterOptions({
     useState(selectedSubjects);
   const [showAllSubjects, setShowAllSubjects] = useState(false);
 
-  const [showLevels, setShowLevels] = useState(true);
+  const [showLevels, setShowLevels] = useState(false);
   const [showSubjects, setShowSubjects] = useState(false);
 
   const [isFilterMobile, setIsFilterMobile] = useState(false);
