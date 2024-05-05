@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import useHttp from "../../utils/hooks/http-hook";
 import { useForm } from "react-hook-form";
-
+import { AuthContext } from "../../utils/context-API";
+import { toast } from "react-toastify-modernize";
 import Footer from "../../components/UIComponents/Footer/Footer";
 import NavBar from "../../components/UIComponents/Navbar/Navbar";
 import Button from "../../components/UIElements/Button/Button";
 import "./AskQuestion.css";
+import Loader from "../../components/UIElements/Loader/Loader";
 
 const AskQuestion = () => {
   const {
@@ -12,28 +16,65 @@ const AskQuestion = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [selectedImage, setSelectedImage] = useState(null);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(selectedImage);
+  const navigate = useNavigate();
+  const { isLoading, error, sendRequest, clearError } = useHttp();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const { userId } = useContext(AuthContext);
+
+  const onSubmit = async (data) => {
+    try {
+      if (userId == null) {
+        toast.info("login first");
+        navigate("/login");
+        return;
+      }
+      const formData = new FormData();
+
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("level", data.level);
+      formData.append("subject", data.subject);
+      // selectedImage && formData.append("image", selectedImage);
+      console.log(formData, data, selectedImage);
+      await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/questions/${userId}`,
+        "POST",
+        JSON.stringify(data)
+      );
+
+      toast.success("Posted!");
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        onClose: () => clearError(),
+      });
+    }
+  }, [error, clearError]);
 
   return (
     <>
+      {isLoading && <Loader />}
       <NavBar />
+      <div className="bg-gradient"></div>
       <div className="AskQuestionPage">
         <div className="form-container">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             <div className="formGroup">
               <label htmlFor="title">Title</label>
               <input
                 id="title"
                 type="text"
                 placeholder="Title"
-                {...register("Title", { required: true, max: 80, min: 2 })}
+                {...register("title", { required: true, max: 80, min: 2 })}
               />
-              {errors.Title && <span>Title is required.</span>}
+              {errors.title && <span>Title is required.</span>}
             </div>
 
             <div className="formGroup">
@@ -42,14 +83,14 @@ const AskQuestion = () => {
                 type="text"
                 id="description"
                 placeholder="Description"
-                {...register("Description", { required: true, max: 300 })}
+                {...register("description", { required: true, max: 300 })}
               />
-              {errors.Description && <span>Description is required.</span>}
+              {errors.description && <span>Description is required.</span>}
             </div>
 
             <div className="formGroup">
               <label htmlFor="level">Level</label>
-              <select {...register("Level")} id="level">
+              <select {...register("level")} id="level">
                 <option value="Primary School">Primary School</option>
                 <option value="Secondary School">Secondary School</option>
                 <option value="Universiy/College">Universiy/College</option>
@@ -59,7 +100,7 @@ const AskQuestion = () => {
 
             <div className="formGroup">
               <label htmlFor="subject">Subject</label>
-              <select {...register("Subject")} id="subject">
+              <select {...register("subject")} id="subject">
                 <option value="Accounting">Accounting</option>
                 <option value="IT">IT</option>
                 <option value="Maths">Maths</option>

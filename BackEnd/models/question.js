@@ -6,6 +6,8 @@ const questionSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String },
   date_posted: { type: Date, default: Date.now },
+  level: { type: String },
+  subject: { type: String },
   answers: [{ type: mongoose.Types.ObjectId, ref: "Answer" }],
   isEdited: { type: Boolean, default: false },
 });

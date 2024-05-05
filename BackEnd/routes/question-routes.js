@@ -5,11 +5,13 @@ const {
   newQuestion,
   editQuestion,
   deleteQuestion,
+  getQuestions,
 } = require("../controllers/question-controller");
 
-const checkAuth = require("../middleware/check-auth");
+// const checkAuth = require("../middleware/check-auth");
 
-router.use(checkAuth);
+// router.use(checkAuth);
+router.get("/:page", getQuestions);
 
 router.post("/:UID", newQuestion);
 

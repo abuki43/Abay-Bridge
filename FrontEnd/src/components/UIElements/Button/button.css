@@ -1,5 +1,5 @@
 .button {
-  padding: 0.6rem 0.4rem;
+  padding: 0.6rem 0.5rem;
   border-radius: 6px;
   background-color: var(--color-b3);
   font: inherit;
@@ -8,18 +8,15 @@
   text-decoration: none;
   color: white;
   border: 0;
-  box-shadow: 0;
   height: 28px;
   box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 120px;
+  width: 125px;
 }
-.button > * {
-  width: 100%;
-}
+
 .button > a {
   padding: 0;
   margin: 0;
@@ -41,6 +38,7 @@
 .button-inverse {
   background-color: var(--color-w4);
   color: var(--color-g5);
+  box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .button-transparent {

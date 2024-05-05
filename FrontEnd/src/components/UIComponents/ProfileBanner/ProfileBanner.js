@@ -1,7 +1,8 @@
 import React from "react";
+import { IoIosStar } from "react-icons/io";
 import "./ProfileBanner.css";
 
-function ProfileBanner({ username, followers, following, questionsAsked }) {
+function ProfileBanner({ username, questionsAsked, score }) {
   return (
     <div className="profile-banner">
       <div className="profile-info">
@@ -13,9 +14,10 @@ function ProfileBanner({ username, followers, following, questionsAsked }) {
         <div className="user-details">
           <h2>{username}</h2>
           <div className="stats-box">
+            <p> {questionsAsked} Questions asked</p>
             <p>
-              {followers} Followers · {following} Following · {questionsAsked}{" "}
-              Questions asked
+              {score}
+              <IoIosStar />
             </p>
           </div>
         </div>

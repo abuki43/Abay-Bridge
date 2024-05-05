@@ -12,10 +12,23 @@ const {
 } = require("../validator/userValidator");
 
 const signup = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    level,
+    confirmPassword,
+    mobileNumber,
+  } = req.body;
+
+  if (password != confirmPassword) {
+    return next(new HttpError("Password mismatch."));
+  }
 
   const { error } = signupValidator(req.body);
   if (error) {
+    console.log(error.details[0].message);
     return next(new HttpError(error.details[0].message, 422));
   }
 
@@ -41,9 +54,12 @@ const signup = async (req, res, next) => {
     }
 
     const newUser = new User({
-      name,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
+      level,
+      mobileNumber,
       questions: [],
       verificationStatus: false,
       dateJoined: Date.now(),
@@ -161,10 +177,7 @@ const login = async (req, res, next) => {
   }
 
   if (!existingUser) {
-    const error = new HttpError(
-      "Could not identify user, credentials seem to be wrong",
-      403
-    );
+    const error = new HttpError("Could not identify user!", 403);
     return next(error);
   }
 
@@ -172,10 +185,7 @@ const login = async (req, res, next) => {
   try {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (err) {
-    const error = new HttpError(
-      "Could not log you in, please check your credentials and try again",
-      500
-    );
+    const error = new HttpError("Login failed, please try again!", 500);
     return next(error);
   }
 
@@ -192,7 +202,7 @@ const login = async (req, res, next) => {
     token = jwt.sign(
       { userId: existingUser.id, email: existingUser.email },
       process.env.JWT_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "6h" }
     );
     console.log(token);
   } catch (err) {
@@ -208,9 +218,15 @@ const login = async (req, res, next) => {
   });
 };
 const myProfile = async (req, res, next) => {
+  const { UID } = req.params;
+  console.log(UID)
   let user;
   try {
-    user = await User.findById(req.userData.userId).select("-password");
+    // user = await User.findById(req.userData.userId).select("-password");
+    user = await User.findById(UID)
+      .select("-password")
+      .populate("questions")
+      .populate("savedQuestions");
   } catch (err) {
     const error = new HttpError("Error finding user.", 500);
     return next(error);

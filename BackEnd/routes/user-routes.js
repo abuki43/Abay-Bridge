@@ -17,9 +17,9 @@ router.get("/verify/:id/:token", verifingUser);
 
 router.post("/login", login);
 
-router.use(checkAuth);
+// router.use(checkAuth);
 
-router.get("/me", myProfile);
+router.get("/me/:UID", myProfile);
 router.get("/myQuestions/:UID", myQuestions);
 
 module.exports = router;

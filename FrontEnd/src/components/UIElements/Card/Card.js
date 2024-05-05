@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { CiMenuKebab, CiSaveDown1, CiEdit } from "react-icons/ci";
+import { MdOutlineReportProblem, MdOutlineDeleteSweep } from "react-icons/md";
 import questionImage from "../../../assets/image 3.png";
 import "./card.css";
 
@@ -17,14 +19,19 @@ const Card = (props) => {
     shares,
   } = props.data;
 
+  const [showCardOptions, setCardOptions] = useState(false);
   const [isDescripExpanded, setIsDescripExpanded] = useState(false);
 
+  const toggleCardOptions = () => {
+    setCardOptions((prev) => !prev);
+  };
   const toggleDescrip = () => {
     setIsDescripExpanded((prev) => !prev);
   };
 
   return (
     <div className="card-container">
+      {showCardOptions && <CardOptions toggle={toggleCardOptions} />}
       <div className="header">
         <div>
           <a href={username}>
@@ -39,11 +46,9 @@ const Card = (props) => {
             {timestamp} • {subject} • {location}
           </p>
         </div>
-        <img
-          src="https://rawcdn.githack.com/MenaiAla/react-social-media-card/62fa92f435e5e06e484ef7be59a26b70573f72ec/src/assets/icons/more_24.png"
-          alt="Options"
-          className="options-icon"
-        />
+        <div className="options-icon" onClick={toggleCardOptions}>
+          <CiMenuKebab />
+        </div>
       </div>
       <div className="content">
         <div className="post-title">
@@ -80,7 +85,7 @@ const Card = (props) => {
             alt="icon"
             className="icon"
           />
-          <p className="comment-count">{answers}</p>
+          {/* <p className="comment-count">{answers}</p> */}
         </span>
         <span className="share-btn">
           <img
@@ -97,6 +102,37 @@ const Card = (props) => {
           placeholder="Add a comment"
         />
         <button className="send-btn">Send</button>
+      </div>
+    </div>
+  );
+};
+
+const CardOptions = ({ toggle }) => {
+  return (
+    <div className="cardOptions">
+      <div className="overlay">
+        <div className="content">
+          <div className="action-button">
+            <CiSaveDown1 />
+            <p>Save</p>
+          </div>
+          <div className="action-button">
+            <CiEdit />
+            <p>Edit</p>
+          </div>
+          <div className="action-button">
+            <MdOutlineDeleteSweep />
+            <p>Delete</p>
+          </div>
+          <div className="action-button report-button">
+            <MdOutlineReportProblem />
+            <p>Report</p>
+          </div>
+          <hr className="divider" />
+          <p className="cancel-button" onClick={toggle}>
+            Cancel
+          </p>
+        </div>
       </div>
     </div>
   );

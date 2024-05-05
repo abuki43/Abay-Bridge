@@ -6,9 +6,13 @@ import "./QuestionsList";
 const QuestionsList = ({ data }) => {
   return (
     <div className="questionsList">
-      {data.map((d) => {
-        return <Card data={d} />;
-      })}
+      {data == null || data.length == 0 ? (
+        <h2>Nothing found!</h2>
+      ) : (
+        data.map((d) => {
+          return <Card data={d} />;
+        })
+      )}
     </div>
   );
 };

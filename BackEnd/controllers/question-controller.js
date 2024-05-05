@@ -11,6 +11,7 @@ const questions = [];
 const newQuestion = async (req, res, next) => {
   const { error } = questionValidator(req.body);
   if (error) {
+    console.log(req.body, error.details[0].message);
     return next(new HttpError(error.details[0].message, 422));
   }
 
@@ -156,4 +157,43 @@ const deleteQuestion = async (req, res, next) => {
   res.status(200).json({ message: "successfully deleted!" });
 };
 
-module.exports = { newQuestion, editQuestion, deleteQuestion };
+const getQuestions = async (req, res, next) => {
+  const page = parseInt(req.params.page);
+  console.log(page);
+  const perPage = 10;
+
+  try {
+    let query = {}; // Initialize an empty query object
+
+    const levels = req.query.levels ? req.query.levels.split(",") : [];
+    const subjects = req.query.subjects ? req.query.subjects.split(",") : [];
+    console.log(levels, subjects);
+    // Check if filter options are provided and not equal to "ALL"
+    if (levels.length > 0 && !levels.includes("ALL")) {
+      query.level = { $in: levels }; // Add level filter to the query
+    }
+
+    if (subjects.length > 0 && !subjects.includes("ALL")) {
+      query.subject = { $in: subjects }; // Add subject filter to the query
+    }
+
+    const totalQuestions = await Question.countDocuments(query); // Get the total number of filtered questions in the database
+    const startIndex = (page - 1) * perPage;
+
+    // Fetch paginated filtered questions from the database using skip and limit
+    const paginatedQuestions = await Question.find(query)
+      .skip(startIndex)
+      .limit(perPage);
+
+    res.json({
+      questions: paginatedQuestions,
+      totalPages: Math.ceil(totalQuestions / perPage), // Calculate the total number of pages
+    });
+  } catch (e) {
+    console.log(e);
+    const error = new HttpError("Getting questions failed", 500);
+    return next(error);
+  }
+};
+
+module.exports = { newQuestion, editQuestion, deleteQuestion, getQuestions };

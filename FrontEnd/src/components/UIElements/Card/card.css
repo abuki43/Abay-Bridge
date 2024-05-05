@@ -7,6 +7,7 @@
   border-radius: 16px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  margin-bottom: 1.6rem;
   position: relative;
 }
 
@@ -45,6 +46,7 @@
 
 .options-icon {
   margin-left: auto;
+  font-size: 25px;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -134,6 +136,66 @@
 
 .send-btn:hover {
   background-color: #3e35c7;
+}
+
+.cardOptions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 13;
+}
+
+.cardOptions .overlay {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  max-width: 250px;
+}
+
+.cardOptions .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardOptions .action-button {
+  padding: 5x 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.cardOptions .report-button {
+  color: red;
+}
+
+.cardOptions .divider {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: black;
+  margin: 10px 0;
+}
+
+.cardOptions .cancel-button {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
 }
 
 @media (min-width: 950px) {

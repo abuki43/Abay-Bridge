@@ -1,16 +1,22 @@
-import React, { useState } from "react";
-import { useForm, setError } from "react-hook-form";
-import API from "../../utils/API";
-import useHttp from "../../utils/http-hook";
-
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify-modernize";
+import { useForm } from "react-hook-form";
+import useHttp from "../../utils/hooks/http-hook";
+import { AuthContext } from "../../utils/context-API";
 import Button from "../../components/UIElements/Button/Button";
 import Footer from "../../components/UIComponents/Footer/Footer";
 import Image from "../../assets/OBJECTS.svg";
+import Loader from "../../components/UIElements/Loader/Loader";
+
 import "./signup.css";
 
 const Signup = ({ state }) => {
   const [isSignUp, setIsSignUp] = useState(false || state);
-  const customhttp = useHttp();
+  const authContext = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttp();
+  const navigate = useNavigate();
+
   const {
     register,
     setError,
@@ -33,25 +39,52 @@ const Signup = ({ state }) => {
         return;
       }
       try {
-        const { isLoading, error, response } = await API.signUp(data, {
-          ...customhttp,
-        });
-        console.log(error, isLoading, response);
-      } catch (error) {
-        console.log("Error signing up:", error.message);
+        console.log(data);
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
+          "POST",
+          JSON.stringify(data)
+        );
+
+        if (error) {
+          throw new Error(error);
+        }
+        navigate("/questions");
+        toast("Signed up!");
+      } catch (e) {
+        // toast(e.message);
+        console.log(error);
       }
     } else {
+      const LoginData = { email: data.email, password: data.password };
+      console.log(process.env.REACT_APP_BACKEND_URL);
       try {
-        const loginData = { email: data.email, password: data.password };
-        const { isLoading, error, response } = await API.login(loginData, {
-          ...customhttp,
-        });
-        console.log(error, isLoading, response);
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
+          "POST",
+          JSON.stringify(LoginData)
+        );
+
+        if (error) {
+          throw new Error(error);
+        }
+
+        navigate("/questions");
+        toast("Logged in!");
+        authContext.login(response.userId, response.token);
       } catch (error) {
-        console.log("Error signing up:", error.message);
+        console.log(error);
       }
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        onClose: () => clearError(),
+      });
+    }
+  }, [error, clearError]);
 
   const changeSignup = () => {
     setIsSignUp((prev) => !prev);
@@ -59,6 +92,7 @@ const Signup = ({ state }) => {
 
   return (
     <>
+      {isLoading && <Loader color="#007ef2" />}
       <div className="signupPage">
         <div className="signupImage">
           <img src={Image} alt="" />
