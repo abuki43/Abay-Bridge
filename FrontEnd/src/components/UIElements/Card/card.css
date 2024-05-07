@@ -9,6 +9,7 @@
   padding: 10px;
   margin-bottom: 1.6rem;
   position: relative;
+  padding-bottom: 1.5rem;
 }
 
 .card-container .header {
@@ -38,10 +39,18 @@
   color: #4f46e5;
 }
 
+.level-subj,
 .timestamp {
   font-size: 13px;
   margin-top: 0;
   color: #777777;
+  text-align: left;
+  padding-left: 20px;
+}
+.level-subj {
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
 }
 
 .options-icon {
@@ -91,17 +100,19 @@
   cursor: pointer;
 }
 
-.icon {
+.comment-btn svg,
+.share-btn svg {
   width: 24px;
   height: 24px;
   margin-right: 4px;
 }
 
 .like-count,
-.comment-count,
-.share-count {
+.comment-count {
+  display: flex;
+  justify-content: center;
   font-size: 14px;
-  margin-bottom: 0;
+  margin: 0;
   color: #777777;
 }
 
@@ -136,6 +147,14 @@
 
 .send-btn:hover {
   background-color: #3e35c7;
+}
+.isEdited {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+  color: #777777;
 }
 
 .cardOptions {

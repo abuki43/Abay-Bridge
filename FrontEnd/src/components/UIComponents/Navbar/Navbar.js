@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu, GiArtificialHive } from "react-icons/gi";
 import { IoMdCloseCircleOutline, IoMdHome } from "react-icons/io";
-import { IoLogIn } from "react-icons/io5";
+import { FcAbout } from "react-icons/fc";
 import { CgProfile } from "react-icons/cg";
 import Button from "../../UIElements/Button/Button";
 import BackDrop from "../../UIElements/BackDrop/BackDrop";
@@ -33,15 +33,15 @@ const NavBar = () => {
           <div className="nav-menus mob-hide">
             <ul className="nav-menus-lists">
               <Link to="/questions">Questions</Link>
-              {isLoggedIn && <Link to="/ask">Ask AI</Link>}
-              <Link to="/contact">Contact Us</Link>
+              <Link to="/askAI">Ask AI</Link>
+              <Link to="/about">About</Link>
             </ul>
           </div>
           <div className="nav-buttons mob-hide">
             {isLoggedIn ? (
               <>
                 <Button color="black" padI="1.1">
-                  Ask question
+                  <Link to="/ask">Ask Question</Link>
                 </Button>
                 <Button color="inverse">
                   <Link to="/profile">profile</Link>
@@ -86,12 +86,16 @@ const SideBar = ({ isOpen, close, isLoggedIn, logout }) => {
               <IoMdHome />
               <p>Questions</p>
             </Link>
+            <Link to="/askAI">
+              <GiArtificialHive />
+              <p>Ask AI</p>
+            </Link>
+            <Link to="/about">
+              <FcAbout />
+              <p>About</p>
+            </Link>
             {isLoggedIn && (
               <>
-                <Link to="/ask">
-                  <GiArtificialHive />
-                  <p>Ask AI</p>
-                </Link>
                 <Link to="/profile">
                   <CgProfile />
                   <p>Profile</p>

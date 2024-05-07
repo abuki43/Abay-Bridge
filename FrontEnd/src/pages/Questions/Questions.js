@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import NavBar from "../../components/UIComponents/Navbar/Navbar";
 import QuestionsHero from "../../components/UIComponents/QuestionsHero.js/QuestionsHero";
 import FilterOptions from "../../components/UIElements/Filter/Filter";
@@ -11,6 +11,8 @@ import QuestionsList from "../../components/UIComponents/QuestionsList/Questions
 
 const Questions = () => {
   const { sendRequest, error, isLoading, clearError } = useHttp();
+
+  const MemoizedFilterOptions = React.memo(FilterOptions);
   const levels = [
     "ALL",
     "Primary School",
@@ -51,7 +53,7 @@ const Questions = () => {
 
   useEffect(() => {
     fetchQuestions(1);
-  }, [selectedLevels, selectedSubjects]); // use efffect runs when there is change on level , subject and when the page first reloads
+  }, []); // use efffect runs  when the page first reloads
 
   const fetchQuestions = async (page) => {
     try {
@@ -74,12 +76,15 @@ const Questions = () => {
     }
   };
 
-  const handleApplyFilters = (selectedLevels, selectedSubjects) => {
-    setSelectedLevels(selectedLevels);
-    setSelectedSubjects(selectedSubjects);
-    setCurrentPage(1);
-    fetchQuestions(1);
-  };
+  const handleApplyFilters = useCallback(
+    (selectedLevels, selectedSubjects) => {
+      setSelectedLevels(selectedLevels);
+      setSelectedSubjects(selectedSubjects);
+      setCurrentPage(1);
+      fetchQuestions(1);
+    },
+    [selectedLevels, selectedSubjects]
+  );
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -93,11 +98,13 @@ const Questions = () => {
     }
   };
 
-  if (error) {
-    toast.error(error, {
-      onClose: () => clearError(),
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        onClose: () => clearError(),
+      });
+    }
+  }, [error, clearError]);
   return (
     <div className="questionsPage">
       {isLoading && <Loader />}
@@ -105,7 +112,7 @@ const Questions = () => {
       <QuestionsHero />
 
       <div className="questionsContainer">
-        <FilterOptions
+        <MemoizedFilterOptions
           levels={levels}
           subjects={subjects}
           selectedLevels={selectedLevels}

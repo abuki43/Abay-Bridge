@@ -71,7 +71,7 @@ const Profile = () => {
           <div></div>
           <div className="menu-item">
             <Button
-              color="white"
+              color="white-small"
               className={activeSection === "myQuestions" ? "active" : ""}
               onClick={() => handleSectionChange("myQuestions")}
             >
@@ -83,7 +83,7 @@ const Profile = () => {
           </div>
           <div className="menu-item">
             <Button
-              color="white"
+              color="white-small"
               className={activeSection === "editProfile" ? "active" : ""}
               onClick={() => handleSectionChange("editProfile")}
             >
@@ -96,7 +96,7 @@ const Profile = () => {
 
           <div className="menu-item">
             <Button
-              color="white"
+              color="white-small"
               className={activeSection === "editProfile" ? "active" : ""}
               onClick={() => handleSectionChange("saved")}
             >
@@ -110,7 +110,8 @@ const Profile = () => {
           {activeSection === "myQuestions" && (
             <QuestionsList data={result.questions} />
           )}
-          {activeSection === "editProfile" && <EditProfile />}
+          {activeSection === "editProfile" && <EditProfile data={result} />}
+
           {activeSection === "saved" && (
             <QuestionsList data={result.savedQuestions} />
           )}

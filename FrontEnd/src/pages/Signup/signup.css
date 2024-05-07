@@ -5,9 +5,19 @@
   padding-top: 3rem;
   padding-bottom: 2rem;
   align-items: center;
-  background-color: var(--color-w1);
+  /* background-color: var(--color-w1); */
   color: var(--color-text);
   min-height: 1000px;
+}
+.signupPage .bg-gradient {
+  background: linear-gradient(0deg, #039dc0 10%, #0cda9c 100%);
+  content: "";
+  height: 100vh;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(50%);
+  width: 100%;
+  z-index: -1;
 }
 
 .signupPage h2 {
@@ -49,7 +59,7 @@ form,
 }
 
 .formGroup {
-  margin-bottom: 25px;
+  margin-bottom: 18px;
   width: 100%;
 }
 
@@ -60,23 +70,22 @@ label {
 }
 
 .signupPage input,
+.signupPage input[type="text"],
 select,
+#level,
 .editProfilePage input {
   width: 100%;
-  padding-left: 10px;
-  padding-block: 15px; /* Increase the size of the inputs */
-  width: 300px;
-  border: 1px solid #ccc;
+  padding-left: 12px;
+  padding-block: 12px; /* Increase the size of the inputs */
+  /* width: 300px; */
+  border: 1px solid #cac9c9;
   border-radius: 4px;
   font-size: 18px;
+  background-color: transparent;
 }
 
 input::placeholder {
   color: rgb(128, 121, 121);
-}
-
-.passwordInput {
-  position: relative;
 }
 
 #level {
@@ -84,8 +93,11 @@ input::placeholder {
 }
 
 form .signupBtn {
-  width: 450px;
+  width: 400px;
   background-color: var(--color-b3);
+}
+.signupBtnContainer {
+  margin-top: 20px;
 }
 
 .input.error {
@@ -106,6 +118,7 @@ span {
   .signupPage input,
   select {
     width: 500px;
+    padding-block: 15px;
   }
 }
 
@@ -128,9 +141,20 @@ span {
     width: 43%;
     justify-content: center;
   }
-  .signupPage input,
-  select {
-    width: 400px;
+  .formGroup {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+  }
+  .signupPage input[type="password"],
+  .signupPage input[type="text"],
+  .signupPage input[type="tel"],
+  select,
+  #level,
+  .editProfilePage input {
+    justify-self: center;
+    width: 520px;
+    padding-block: 15px;
   }
 }
 @media (min-width: 1350px) {

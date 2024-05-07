@@ -8,7 +8,7 @@
   top: 0%;
   left: 0%;
   transform: translateX(-100%);
-  z-index: 100;
+  z-index: 1004;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
@@ -23,7 +23,7 @@
   position: absolute;
   top: 0.75rem;
   right: 1rem;
-  color: var(--color-danger);
+  color: rgb(51, 58, 73);
   border: none;
   font-size: 37px;
 }
@@ -82,7 +82,7 @@
 .filter-checkbox-label {
   display: block;
   margin-bottom: 8px;
-  font-size: 0.95em;
+  font-size: 0.85em;
   color: #555; /* Slightly lighter gray text */
 }
 
@@ -101,9 +101,14 @@
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s;
+  z-index: 500;
 }
 
-.show-more-button:hover,
+.show-more-button {
+  padding: 7px 8px;
+  background-color: #333;
+}
+
 .apply-filters-button:hover {
   background-color: #005669;
 }

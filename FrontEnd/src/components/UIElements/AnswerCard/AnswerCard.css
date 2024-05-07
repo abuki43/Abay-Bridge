@@ -1,0 +1,102 @@
+.answer-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.answer-author {
+  display: flex;
+  align-items: center;
+}
+
+.answer-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.answer-username {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.answer-timestamp {
+  font-size: 12px;
+  color: #888888;
+}
+
+.answer-content {
+  margin-bottom: 10px;
+}
+
+.answer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.answer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.answer-action {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.answer-icon {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.answer-icon.upvoted {
+  color: #1da1f2;
+}
+
+.answer-icon.downvoted {
+  color: #c62828;
+}
+
+.answer-reply {
+  margin-top: 10px;
+}
+
+.answer-reply-input {
+  width: 100%;
+  height: 80px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+  resize: none;
+  margin-bottom: 10px;
+}
+
+.answer-reply-button {
+  background-color: #1da1f2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.answer-reply-button:hover {
+  opacity: 0.8;
+}

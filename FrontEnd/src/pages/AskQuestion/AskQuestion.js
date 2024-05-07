@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useHttp from "../../utils/hooks/http-hook";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../utils/context-API";
@@ -11,42 +11,92 @@ import "./AskQuestion.css";
 import Loader from "../../components/UIElements/Loader/Loader";
 
 const AskQuestion = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const edit = searchParams.get("edit");
+  const title = decodeURIComponent(searchParams.get("title"));
+  const QID = decodeURIComponent(searchParams.get("id"));
+  const description = decodeURIComponent(searchParams.get("description"));
+  const level = decodeURIComponent(searchParams.get("level"));
+  const subject = decodeURIComponent(searchParams.get("subject"));
+  const image = decodeURIComponent(searchParams.get("image"));
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const navigate = useNavigate();
   const { isLoading, error, sendRequest, clearError } = useHttp();
   const [selectedImage, setSelectedImage] = useState(null);
   const { userId } = useContext(AuthContext);
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (edit) {
+      // Set the form input values using the retrieved query parameters
+      setIsEdit(true);
+      setValue("title", title);
+      setValue("description", description);
+      setValue("level", level);
+      setValue("subject", subject);
+      setSelectedImage(image); // Set the selectedImage state with the image URL
+    }
+  }, [edit, title, description, level, subject, image]);
 
   const onSubmit = async (data) => {
-    try {
-      if (userId == null) {
-        toast.info("login first");
-        navigate("/login");
-        return;
+    if (!edit) {
+      try {
+        if (userId == null) {
+          toast.info("login first");
+          navigate("/login");
+          return;
+        }
+        const formData = new FormData();
+
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+        formData.append("level", data.level);
+        formData.append("subject", data.subject);
+        // selectedImage && formData.append("image", selectedImage);
+        console.log(formData, data, selectedImage);
+        await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/questions/${userId}`,
+          "POST",
+          JSON.stringify(data),
+          { "Content-Type": "application/json" }
+        );
+
+        toast.success("Posted!");
+        navigate("/profile");
+      } catch (error) {
+        console.log(error);
       }
-      const formData = new FormData();
+    } else {
+      try {
+        const formData = new FormData();
 
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("level", data.level);
-      formData.append("subject", data.subject);
-      // selectedImage && formData.append("image", selectedImage);
-      console.log(formData, data, selectedImage);
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/questions/${userId}`,
-        "POST",
-        JSON.stringify(data)
-      );
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+        formData.append("level", data.level);
+        formData.append("subject", data.subject);
+        // selectedImage && formData.append("image", selectedImage);
 
-      toast.success("Posted!");
-      navigate("/profile");
-    } catch (error) {
-      console.log(error);
+        await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/questions/${QID}`,
+          "PATCH",
+          JSON.stringify(data),
+          { "Content-Type": "application/json" }
+        );
+
+        toast.success("Edited!");
+        navigate("/profile");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -129,7 +179,7 @@ const AskQuestion = () => {
             </div>
 
             <Button color="black" wid="150">
-              Submit Question
+              {isEdit ? "Edit Question" : "Submit Question"}
             </Button>
           </form>
         </div>

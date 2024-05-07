@@ -11,6 +11,8 @@ import Questions from "./pages/Questions/Questions";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Profile from "./pages/Profile/Profile";
 import "react-toastify-modernize/dist/ReactToastify.css";
+import AskAI from "./pages/AskAI/AskAI";
+import AboutPage from "./pages/About/About";
 
 function App() {
   const { userId, token, login, logout } = useAuth();
@@ -38,6 +40,8 @@ function App() {
           <Route path="/questions" element={<Questions />} />
           <Route path="/ask" element={<AskQuestion />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/askAI" element={<AskAI />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AuthContext.Provider>
     </>

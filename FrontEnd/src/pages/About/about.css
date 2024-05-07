@@ -1,0 +1,195 @@
+/* AboutPage.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hero Section */
+.hero {
+  background-color: #f8f8f8;
+  padding: 4rem 0;
+}
+
+.title {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 1rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: #777;
+  animation: slide-up 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+/* About Section */
+.about {
+  background-color: #fff;
+  padding: 4rem 0;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.about p {
+  font-size: 1.2rem;
+  color: #777;
+  animation: fade-in 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+/* Features Section */
+.features {
+  background-color: #f8f8f8;
+  padding: 4rem 0;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.feature-item {
+  flex: 1 1 300px;
+  margin: 1rem;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fade-in 1s ease-in-out;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #333;
+  animation: spin 1s linear infinite;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  animation: slide-up 1s ease-in-out;
+}
+
+.feature-description {
+  font-size: 1.2rem;
+  color: #777;
+  animation: slide-up 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+/* Instructions Section */
+.instructions {
+  background-color: #fff;
+  padding: 4rem 0;
+}
+
+.instructions h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.instructions p {
+  font-size: 1.2rem;
+  color: #777;
+  animation: fade-in 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+/* Contact Developer Section */
+.contact-developer {
+  background-color: #f8f8f8;
+  padding: 4rem 0;
+}
+
+.contact-developer h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.contact-developer p {
+  font-size: 1.2rem;
+  color: #777;
+  animation: fade-in 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+.contact-developer a {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: #333;
+  text-decoration: none;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  animation: slide-up 1s ease-in-out;
+}
+
+.contact-developer a:hover {
+  background-color: #555;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

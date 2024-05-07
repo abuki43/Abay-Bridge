@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { toast } from "react-toastify-modernize";
+import useHttp from "../../../utils/hooks/http-hook";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import Button from "../../UIElements/Button/Button";
 import "./EditProfile.css";
+import { AuthContext } from "../../../utils/context-API";
+import Loader from "../../UIElements/Loader/Loader";
 
-const EditProfile = () => {
+const EditProfile = ({ data }) => {
+  const { isLoading, error, sendRequest, clearError } = useHttp();
+  const navigate = useNavigate();
+  const { userId } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      firstName: "John",
-      lastName: "Doe",
-      mobileNumber: "1234567890",
-      oldPassword: "",
-      newPassword: "",
+      firstName: data.firstName,
+      lastName: data.lastName,
+      mobileNumber: data.mobileNumber,
+      email: data.email,
+      level: data.level,
     },
   });
 
@@ -32,14 +40,38 @@ const EditProfile = () => {
     }
   };
 
-  const onSubmit = (data) => {
-    // Include the profileImage state in the submitted data
-    data.profileImage = profileImage;
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      console.log(userId);
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/me/${userId}`,
+        "PATCH",
+        JSON.stringify(data),
+        { "Content-Type": "application/json" }
+      );
+
+      if (error) {
+        throw new Error(error);
+      }
+      navigate("/questions");
+      toast.success("Profile Updated!");
+    } catch (e) {
+      // toast(e.message);
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        onClose: () => clearError(),
+      });
+    }
+  }, [error, clearError]);
 
   return (
     <div className="editProfilePage">
+      {isLoading && <Loader />}
       <h2>Edit Profile</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,6 +138,33 @@ const EditProfile = () => {
         </div>
 
         <div className="formGroup">
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="abebekebede@email.com"
+            {...register("email", {
+              required: true,
+              pattern: /^\S+@\S+$/i,
+            })}
+            className={errors.email ? "error" : ""}
+          />
+          {errors.email && (
+            <p className="errorMessage">Please enter a valid email address</p>
+          )}
+        </div>
+
+        <div className="formGroup">
+          <label htmlFor="level">Level</label>
+          <select {...register("level")} id="level">
+            <option value="Primary School">Primary School</option>
+            <option value="Secondary School">Secondary School</option>
+            <option value="University/College">University/College</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="formGroup">
           <label htmlFor="mobileNumber">Mobile number</label>
           <input
             type="tel"
@@ -123,50 +182,6 @@ const EditProfile = () => {
               Mobile number must be between 6 and 12 digits
             </p>
           )}
-        </div>
-
-        <div className="formGroup">
-          <label htmlFor="oldPassword">Old password</label>
-          <div className="passwordInput">
-            <input
-              type="password"
-              id="oldPassword"
-              placeholder="********"
-              {...register("oldPassword", {
-                required: true,
-                maxLength: 25,
-                minLength: 6,
-              })}
-              className={errors.oldPassword ? "error" : ""}
-            />
-            {errors.oldPassword && (
-              <p className="errorMessage">
-                Password must be between 6 and 25 characters
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="formGroup">
-          <label htmlFor="newPassword">New password</label>
-          <div className="passwordInput">
-            <input
-              type="password"
-              id="newPassword"
-              placeholder="********"
-              {...register("newPassword", {
-                required: true,
-                maxLength: 25,
-                minLength: 6,
-              })}
-              className={errors.newPassword ? "error" : ""}
-            />
-            {errors.newPassword && (
-              <p className="errorMessage">
-                Password must be between 6 and 25 characters
-              </p>
-            )}
-          </div>
         </div>
 
         <Button wid="310" type="submit">

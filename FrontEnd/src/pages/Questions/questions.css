@@ -6,7 +6,6 @@
   margin: auto;
   margin-block: 2rem;
   width: 100%;
-
   font-size: 27px;
   color: var(--color-text);
   font-weight: 600;
@@ -17,7 +16,6 @@
   position: relative;
   display: flex;
   width: 100%;
-  gap: 1rem;
 }
 
 .listOfQuestions {
@@ -34,6 +32,7 @@
   justify-content: center;
   margin-top: 20px;
   gap: 1.3rem;
+  margin-bottom: 34px;
 }
 
 .btnContainer button {
@@ -58,5 +57,6 @@
   }
   .questionsContainer {
     padding-inline: 2rem;
+    gap: 1rem;
   }
 }

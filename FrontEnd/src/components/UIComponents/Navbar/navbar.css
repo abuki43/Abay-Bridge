@@ -20,6 +20,9 @@ header .nav-logo {
   display: flex;
   gap: 40px;
 }
+.nav-menus-lists > a:hover {
+  color: #005669;
+}
 li {
   color: var(--color-g5);
   margin-right: 10px;
@@ -32,13 +35,14 @@ li {
 .hamburger svg {
   width: 3.2rem;
   height: 2rem;
+  cursor: pointer;
 }
 
 .sideBar {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 100;
+  z-index: 7000;
   width: 55%;
   height: 100vh;
   background-color: rgb(253, 254, 254);
@@ -65,8 +69,8 @@ li {
 .asideCloseBtn {
   position: absolute;
   top: 0.3rem;
-  left: 0.5rem;
-  color: var(--color-danger);
+  left: 0.3rem;
+  color: rgb(70, 70, 105);
   border: none;
   font-size: 40px;
   background: transparent;

@@ -43,7 +43,8 @@ const Signup = ({ state }) => {
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
-          JSON.stringify(data)
+          JSON.stringify(data),
+          { "Content-Type": "application/json" }
         );
 
         if (error) {
@@ -57,12 +58,13 @@ const Signup = ({ state }) => {
       }
     } else {
       const LoginData = { email: data.email, password: data.password };
-      console.log(process.env.REACT_APP_BACKEND_URL);
+      console.log(JSON.stringify(LoginData));
       try {
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/login`,
           "POST",
-          JSON.stringify(LoginData)
+          JSON.stringify(LoginData),
+          { "Content-Type": "application/json" }
         );
 
         if (error) {
@@ -70,8 +72,8 @@ const Signup = ({ state }) => {
         }
 
         navigate("/questions");
-        toast("Logged in!");
-        authContext.login(response.userId, response.token);
+        toast.success("Logged in!");
+        authContext.login(response.userId, response.token, response.profile);
       } catch (error) {
         console.log(error);
       }
@@ -92,6 +94,7 @@ const Signup = ({ state }) => {
 
   return (
     <>
+      <div className="bg-gradient"></div>
       {isLoading && <Loader color="#007ef2" />}
       <div className="signupPage">
         <div className="signupImage">
@@ -235,10 +238,11 @@ const Signup = ({ state }) => {
                 </div>
               </>
             )}
-
-            <Button wid="310" type="submit">
-              {isSignUp ? "Signup" : "Login"}
-            </Button>
+            <div className="signupBtnContainer">
+              <Button wid="300" type="submit">
+                {isSignUp ? "Signup" : "Login"}
+              </Button>
+            </div>
           </form>
           <p>
             {isSignUp ? "Already have an account? " : "Create an account? "}

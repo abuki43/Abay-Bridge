@@ -1,0 +1,72 @@
+/* .answers-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.answers-container {
+  background-color: #ffffff;
+  z-index: 1002;
+  border-radius: 8px;
+  padding: 10px 20px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600px;
+  max-height: 70vh;
+}
+
+.answers-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.answers-list {
+  margin-top: 10px;
+  width: 100%;
+  max-height: calc(70vh - 120px);
+  overflow-y: auto; /* Use 'auto' to enable scrolling only when necessary */
+}
+
+.answers-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.answers-close-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.answers-close-icon {
+  font-size: 24px;
+  color: #3d4b53;
+}
+
+.answers-close-icon:hover {
+  color: #000000;
+}
+
+.no-answer {
+  text-align: center;
+}

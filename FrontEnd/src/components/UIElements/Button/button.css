@@ -1,5 +1,5 @@
 .button {
-  padding: 0.6rem 0.5rem;
+  padding: 0.6rem 0.4rem;
   border-radius: 6px;
   background-color: var(--color-b3);
   font: inherit;
@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 125px;
+  width: 115px;
 }
 
 .button > a {
@@ -61,8 +61,9 @@
   z-index: 10;
 }
 
-.button-white {
+.button-white-small {
   border: 1px dotted rgb(39, 33, 33);
   background-color: rgb(248, 248, 247);
   color: var(--color-text);
+  padding: 0.4rem 0.24rem;
 }

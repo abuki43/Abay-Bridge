@@ -6,14 +6,16 @@ export default function useAuth() {
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(null);
   const [tokenExpDate, setTokenExpDate] = useState(null);
+  const [profile, setProfile] = useState({});
 
-  const login = useCallback((userId, token, expDate) => {
+  const login = useCallback((userId, token, profile, expDate) => {
     console.log("logged in");
     const tokenExpDate =
       expDate || new Date(new Date().getTime() + 1000 * 60 * 60);
 
     setToken(token);
     setUserId(userId);
+    setProfile(profile);
     setTokenExpDate(tokenExpDate);
 
     localStorage.setItem(
@@ -31,7 +33,7 @@ export default function useAuth() {
     setToken(null);
     setUserId(null);
     setTokenExpDate(null);
-
+    setProfile(profile);
     localStorage.removeItem("user");
   }, []);
 
@@ -56,5 +58,5 @@ export default function useAuth() {
     }
   }, [token, logout, tokenExpDate]);
 
-  return { userId, token, login, logout };
+  return { userId, token, login, logout, profile };
 }
