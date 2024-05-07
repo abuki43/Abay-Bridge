@@ -33,7 +33,10 @@ const postAnswer = async (req, res, next) => {
 
   let question;
   try {
-    question = await Question.findById(QID);
+    question = await Question.findById(QID).populate(
+      "author",
+      "firstName profile_image"
+    );
   } catch (err) {
     const error = new HttpError("Error finding question ", 500);
     return next(error);

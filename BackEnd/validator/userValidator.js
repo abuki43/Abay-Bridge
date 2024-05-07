@@ -44,4 +44,22 @@ const loginValidator = (user) => {
   return schema.validate(user);
 };
 
-module.exports = { signupValidator, loginValidator };
+const updateProfileValidator = (user) => {
+  const schema = Joi.object({
+    firstName: Joi.string().min(3).max(255).required(),
+    lastName: Joi.string().min(3).max(255).required(),
+    level: Joi.string()
+      .valid(
+        "Primary School",
+        "Secondary School",
+        "University/College",
+        "Other"
+      )
+      .required(),
+    email: Joi.string().email().required(),
+    mobileNumber: Joi.string().min(10).max(15).required(),
+  });
+  return schema.validate(user);
+};
+
+module.exports = { signupValidator, loginValidator, updateProfileValidator };

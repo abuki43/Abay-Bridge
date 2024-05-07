@@ -8,6 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   level: { type: String, required: true },
   password: { type: String, required: true, minlength: 6 },
+  mobileNumber: { type: String, required: true },
   profile_image: { type: String, required: false },
   questions: [{ type: mongoose.Types.ObjectId, ref: "Question" }],
   savedQuestions: [{ type: mongoose.Types.ObjectId, ref: "Question" }],

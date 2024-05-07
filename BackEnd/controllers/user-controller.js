@@ -9,6 +9,7 @@ const sendEmail = require("../utils/email");
 const {
   loginValidator,
   signupValidator,
+  updateProfileValidator,
 } = require("../validator/userValidator");
 
 const signup = async (req, res, next) => {
@@ -215,11 +216,15 @@ const login = async (req, res, next) => {
     email: existingUser.email,
     isVerified: existingUser.verificationStatus,
     token: token,
+    profile: {
+      pp: existingUser.profile_image,
+      firstName: existingUser.firstName,
+    },
   });
 };
 const myProfile = async (req, res, next) => {
   const { UID } = req.params;
-  console.log(UID)
+  console.log(UID);
   let user;
   try {
     // user = await User.findById(req.userData.userId).select("-password");
@@ -255,4 +260,59 @@ const myQuestions = async (req, res, next) => {
     return next(error);
   }
 };
-module.exports = { signup, login, verifingUser, myProfile, myQuestions };
+
+const updateProfile = async (req, res, next) => {
+  const userId = req.params.UID;
+
+  const { firstName, lastName, email, level, mobileNumber } = req.body;
+
+  const { error } = updateProfileValidator(req.body);
+  if (error) {
+    console.log(error.details[0].message);
+    return next(new HttpError(error.details[0].message, 422));
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      const error = new HttpError("User not found.", 404);
+      return next(error);
+    }
+
+    // Update the user's profile fields
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.email = email;
+    user.level = level;
+    user.mobileNumber = mobileNumber;
+
+    try {
+      await user.save();
+    } catch (err) {
+      const error = new HttpError(
+        "Could not update user profile, please try again!",
+        500
+      );
+      return next(error);
+    }
+
+    res.json({
+      message: "User profile updated successfully.",
+    });
+  } catch (err) {
+    const error = new HttpError(
+      "Could not update user profile, please try again",
+      500
+    );
+    return next(error);
+  }
+};
+
+module.exports = {
+  signup,
+  login,
+  verifingUser,
+  myProfile,
+  myQuestions,
+  updateProfile,
+};

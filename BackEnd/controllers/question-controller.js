@@ -15,7 +15,7 @@ const newQuestion = async (req, res, next) => {
     return next(new HttpError(error.details[0].message, 422));
   }
 
-  const { title, description } = req.body;
+  const { title, description, level, subject } = req.body;
   const userId = req.params.UID;
 
   let user;
@@ -40,6 +40,8 @@ const newQuestion = async (req, res, next) => {
   const newQuestion = new Question({
     title: title,
     description: description,
+    level,
+    subject,
     answers: [],
     date_posted: Date.now(),
     author: userId,
@@ -77,7 +79,7 @@ const editQuestion = async (req, res, next) => {
     return next(new HttpError(error.details[0].message, 422));
   }
 
-  const { title, description } = req.body;
+  const { title, description, level, subject } = req.body;
 
   let question;
   try {
@@ -94,14 +96,12 @@ const editQuestion = async (req, res, next) => {
     const error = new HttpError("could not find question for this id.", 404);
     return next(error);
   }
-  // if (question.author.toString() !== req.userData.userId) {
-  //   const error = new HttpError("You are not allowed to edit this question.", 401);
-  //   return next(error);
-  // }
 
   question.title = title;
   question.description = description;
   question.isEdited = true;
+  question.level = level;
+  question.subject = subject;
 
   try {
     await question.save();
@@ -182,6 +182,17 @@ const getQuestions = async (req, res, next) => {
 
     // Fetch paginated filtered questions from the database using skip and limit
     const paginatedQuestions = await Question.find(query)
+      .populate({
+        path: "author",
+        select: "firstName profilePicture score",
+      })
+      .populate({
+        path: "answers",
+        populate: {
+          path: "author",
+          select: "firstName profilePicture score",
+        },
+      })
       .skip(startIndex)
       .limit(perPage);
 
@@ -196,4 +207,50 @@ const getQuestions = async (req, res, next) => {
   }
 };
 
-module.exports = { newQuestion, editQuestion, deleteQuestion, getQuestions };
+const saveQuestion = async (req, res, next) => {
+  const QID = req.params.QID;
+  const UID = req.params.UID;
+
+  let user;
+  try {
+    user = await User.findById(UID).populate("savedQuestions");
+  } catch (err) {
+    const error = new HttpError(
+      "Error finding user before saving question.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError(
+      "Could not find a user for the provided ID.",
+      404
+    );
+    return next(error);
+  }
+
+  const savedQuestionsIndex = user.savedQuestions.findIndex(
+    (question) => question.id === QID
+  );
+
+  if (savedQuestionsIndex !== -1) {
+    // Question already saved, remove it from the saved list
+    user.savedQuestions.splice(savedQuestionsIndex, 1);
+    await user.save();
+    res.status(200).json({ message: "Question removed from saved list" });
+  } else {
+    // Question not saved, add it to the saved list
+    user.savedQuestions.push(QID);
+    await user.save();
+    res.status(200).json({ message: "Question saved successfully" });
+  }
+};
+
+module.exports = {
+  newQuestion,
+  editQuestion,
+  deleteQuestion,
+  getQuestions,
+  saveQuestion,
+};

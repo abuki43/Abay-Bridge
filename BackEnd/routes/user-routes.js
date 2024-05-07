@@ -9,6 +9,7 @@ const {
   verifingUser,
   myProfile,
   myQuestions,
+  updateProfile,
 } = require("../controllers/user-controller");
 
 router.post("/signup", signup);
@@ -20,6 +21,9 @@ router.post("/login", login);
 // router.use(checkAuth);
 
 router.get("/me/:UID", myProfile);
+
 router.get("/myQuestions/:UID", myQuestions);
+
+router.patch("/me/:UID", updateProfile);
 
 module.exports = router;
