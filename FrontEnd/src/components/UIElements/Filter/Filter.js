@@ -136,13 +136,13 @@ function FilterOptions({
                     {subject}
                   </label>
                 ))}
-              {subjects.length > 5 && (
-                <button
+              {subjects.length > 8 && (
+                <p
                   className="show-more-button"
                   onClick={handleShowMoreSubjects}
                 >
                   {showAllSubjects ? "show-less" : "show-more"}
-                </button>
+                </p>
               )}
             </div>
           )}

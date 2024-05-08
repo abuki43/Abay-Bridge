@@ -4,12 +4,11 @@ import BackDrop from "../../UIElements/BackDrop/BackDrop";
 import AnswerCard from "../../UIElements/AnswerCard/AnswerCard";
 import "./answerList.css";
 
-const AnswersList = ({ answers, onClose }) => {
+const AnswersList = ({ answers, onClose, questionStateHandler }) => {
   const handleClose = (event) => {
     event.stopPropagation();
     onClose();
   };
-  console.log(answers);
   return (
     <>
       <BackDrop className="answers-backdrop" onClick={handleClose}></BackDrop>
@@ -27,7 +26,11 @@ const AnswersList = ({ answers, onClose }) => {
             </p>
           ) : (
             answers.map((answer) => (
-              <AnswerCard key={answer._id} answerData={answer} />
+              <AnswerCard
+                key={answer._id}
+                answerData={answer}
+                questionStateHandler={questionStateHandler}
+              />
             ))
           )}
         </div>

@@ -17,18 +17,25 @@ const Questions = () => {
     "ALL",
     "Primary School",
     "Secondary School",
-    "University",
+    "University(College)",
     "Other",
   ];
   const subjects = [
+    "collaborate",
+    "Advice",
+    "Programming",
+    "Tech",
     "Chemistry",
     "Physics",
-    "IT",
     "Accounting",
     "Maths",
     "Biology",
     "Medicine",
     "Enginnering",
+    "Art",
+    "Law",
+    "Social studies",
+    "other",
   ];
 
   const [questions, setQuestions] = useState([]);

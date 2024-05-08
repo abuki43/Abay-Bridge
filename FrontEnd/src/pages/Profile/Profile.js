@@ -20,13 +20,15 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/users/me/6635fb708db8a9b32d6b53c9`,
+          `${process.env.REACT_APP_BACKEND_URL}/users/me/${userId}`,
           "GET"
         );
         console.log(response.user);
         setResult(response.user);
+        console.log(result);
       } catch (e) {
         toast.error(e.message);
+        console.log(e);
       }
     };
 
@@ -64,8 +66,8 @@ const Profile = () => {
         <NavBar />
         <ProfileBanner
           username={result?.firstName || "Unknown"}
-          score={30}
-          questionsAsked={324}
+          score={result?.score}
+          questionsAsked={result?.questions?.length}
         />
         <div className="menu">
           <div></div>

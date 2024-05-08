@@ -11,6 +11,24 @@ import "./AskQuestion.css";
 import Loader from "../../components/UIElements/Loader/Loader";
 
 const AskQuestion = () => {
+  const subjects = [
+    "collaborate",
+    "Advice",
+    "Programming",
+    "Tech",
+    "Chemistry",
+    "Physics",
+    "Accounting",
+    "Maths",
+    "Biology",
+    "Medicine",
+    "Engineering",
+    "Art",
+    "Law",
+    "Social studies",
+    "other",
+  ];
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -143,7 +161,7 @@ const AskQuestion = () => {
               <select {...register("level")} id="level">
                 <option value="Primary School">Primary School</option>
                 <option value="Secondary School">Secondary School</option>
-                <option value="Universiy/College">Universiy/College</option>
+                <option value="University(College)">Universiy/College</option>
                 <option value="other">Other</option>
               </select>
             </div>
@@ -151,12 +169,11 @@ const AskQuestion = () => {
             <div className="formGroup">
               <label htmlFor="subject">Subject</label>
               <select {...register("subject")} id="subject">
-                <option value="Accounting">Accounting</option>
-                <option value="IT">IT</option>
-                <option value="Maths">Maths</option>
-                <option value="Science">Science</option>
-                <option value="Medicine">Medicine</option>
-                <option value="Other">Other</option>
+                {subjects.map((subject) => (
+                  <option key={subject} value={subject}>
+                    {subject}
+                  </option>
+                ))}
               </select>
             </div>
 

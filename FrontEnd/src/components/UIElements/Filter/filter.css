@@ -8,7 +8,7 @@
   top: 0%;
   left: 0%;
   transform: translateX(-100%);
-  z-index: 1004;
+
   flex-direction: column;
   height: 100%;
   overflow: hidden;
@@ -17,6 +17,7 @@
 .filter-options.open {
   display: flex;
   transform: translateX(0%);
+  z-index: 1004;
 }
 
 .mobFilterClose {
@@ -38,15 +39,18 @@
 }
 
 .filter-icon {
-  font-size: 1.8em;
+  font-size: 2rem;
   margin-right: 12px;
-  color: #007791; /* Udemy blue */
+  color: #007791;
+  position: relative;
+  top: 5px;
 }
 
 .filter-title {
-  font-size: 1.4em;
+  font-size: 27px;
   font-weight: 500;
-  color: #333; /* Dark gray text */
+  color: #333;
+  margin-top: 2rem;
 }
 
 .filter-section {
@@ -91,7 +95,6 @@
   vertical-align: middle;
 }
 
-.show-more-button,
 .apply-filters-button {
   background-color: #007791;
   color: white;
@@ -101,12 +104,11 @@
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s;
-  z-index: 500;
 }
 
 .show-more-button {
   padding: 7px 8px;
-  background-color: #333;
+  cursor: pointer;
 }
 
 .apply-filters-button:hover {

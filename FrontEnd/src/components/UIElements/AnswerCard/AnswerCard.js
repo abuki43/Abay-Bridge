@@ -8,7 +8,7 @@ import useHttp from "../../../utils/hooks/http-hook";
 import avatar from "../../../assets/avatar.webp";
 import "./AnswerCard.css";
 
-const AnswerCard = ({ answerData }) => {
+const AnswerCard = ({ answerData, questionStateHandler }) => {
   const { sendRequest, error, clearError } = useHttp();
   const { isLoggedIn, userId } = useContext(AuthContext);
   const {
@@ -18,17 +18,16 @@ const AnswerCard = ({ answerData }) => {
     author,
     upVote,
     downVote,
+    question,
     parentAnswer,
   } = answerData;
   const [isUpvoted, setUpvoted] = useState(upVote.includes(userId));
   const [isDownvoted, setDownvoted] = useState(downVote.includes(userId));
 
-  const [data, setData] = useState({});
-
   useEffect(() => {
-    setData(answerData);
-  }, []);
-
+    setUpvoted(upVote.includes(userId));
+    setDownvoted(downVote.includes(userId));
+  }, [upVote, downVote]);
   const handleUpvote = async () => {
     if (!isLoggedIn) {
       toast.info("Please login first!");
@@ -36,32 +35,13 @@ const AnswerCard = ({ answerData }) => {
     }
     try {
       let response;
-      if (isUpvoted) {
-        response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/answer/upvote/${answerId}/${userId}`,
-          "POST"
-        );
-        setUpvoted(false);
-        setData((prev) => ({
-          ...prev,
-          upVote: [...prev.upVote, userId],
-        }));
-      } else {
-        response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/answer/upvote/${answerId}/${userId}`,
-          "POST"
-        );
-        setUpvoted(true);
-        setData((prev) => ({
-          ...prev,
-          upVote: prev.upVote.filter((id) => id != userId),
-        }));
-        if (isDownvoted) {
-          setDownvoted(false);
-        }
-      }
 
+      response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/upvote/${answerId}/${userId}`,
+        "POST"
+      );
       toast.success(response.message);
+      questionStateHandler("upvote", question, { answerId: answerId });
     } catch (error) {
       toast.error("Failed to upvote. Please try again.");
       console.log(error);
@@ -75,32 +55,16 @@ const AnswerCard = ({ answerData }) => {
     }
     try {
       let response;
-      if (isDownvoted) {
-        response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/answer/downvote/${answerId}/${userId}`,
-          "POST"
-        );
-        setDownvoted(false);
-        setData((prev) => ({
-          ...prev,
-          downVote: [...prev.downVote, userId],
-        }));
-      } else {
-        response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/answer/downvote/${answerId}/${userId}`,
-          "POST"
-        );
-        setDownvoted(true);
-        if (isUpvoted) {
-          setUpvoted(false);
-        }
-        setData((prev) => ({
-          ...prev,
-          downVote: prev.downVote.filter((id) => id != userId),
-        }));
-      }
+
+      response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/downvote/${answerId}/${userId}`,
+        "POST"
+      );
+      console.log(response);
+      setDownvoted(false);
 
       toast.success(response.message);
+      questionStateHandler("downvote", question, { answerId: answerId });
     } catch (error) {
       toast.error("Failed to downvote. Please try again.");
       console.log(error);

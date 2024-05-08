@@ -33,11 +33,10 @@ const Card = (props) => {
     description,
     postImage,
     isEdited,
-    likes,
     answers,
-    shares,
   } = props.data;
-  const { onDeleteQuestion } = props; // used to update question list when question is deleted
+  // const { onDeleteQuestion } = props; // used to update question list when question is deleted
+  const { questionStateHandler } = props;
   const [isMine, setIsMine] = useState(false); // check if the question belongs to the person logged in
   const [showCardOptions, setCardOptions] = useState(false);
   const [isDescripExpanded, setIsDescripExpanded] = useState(false);
@@ -45,8 +44,9 @@ const Card = (props) => {
   const [answerInput, setAnswerInput] = useState("");
 
   useEffect(() => {
-    console.log(author, userId);
-    if (author == userId) {
+    // console.log(props.data._id);
+    console.log(userId, author._id, isMine);
+    if (author._id == userId) {
       setIsMine(true);
     }
   }, []);
@@ -73,7 +73,7 @@ const Card = (props) => {
           "DELETE"
         );
         if (response.message === "successfully deleted!") {
-          onDeleteQuestion(props.data._id);
+          questionStateHandler("delete", props.data._id);
           toast.success("Question deleted successfully!");
         }
       } catch (error) {
@@ -125,8 +125,18 @@ const Card = (props) => {
           JSON.stringify({ content: answerInput }),
           { "Content-Type": "application/json" }
         );
-        setAnswerInput("");
+        const newAnswer = {
+          author: { _id: userId },
+          content: answerInput,
+          upVote: [],
+          downVote: [],
+          question: id,
+          date_posted: Date.now(),
+          _id: Math.random() * 10000,
+        };
         toast.success("Question Answered!");
+        questionStateHandler("addanswer", id, newAnswer);
+        setAnswerInput("");
       } catch (e) {
         console.log(e);
       }
@@ -136,7 +146,11 @@ const Card = (props) => {
   return (
     <div className="card-container">
       {isAnswersOpen && (
-        <AnswersList answers={answers} onClose={toggleAnswer} />
+        <AnswersList
+          answers={answers}
+          onClose={toggleAnswer}
+          questionStateHandler={questionStateHandler}
+        />
       )}
 
       {showCardOptions && isLoggedIn && (

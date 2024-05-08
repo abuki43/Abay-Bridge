@@ -2,6 +2,7 @@ import react from "react";
 
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify-modernize";
+import ScrollToTop from "react-scroll-to-top";
 import { AuthContext } from "./utils/context-API";
 import useAuth from "./utils/hooks/Auth-hook";
 
@@ -33,6 +34,7 @@ function App() {
           pauseOnHover={false}
           theme="dark"
         />
+        <ScrollToTop smooth color="black" />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Signup state={false} />} />
