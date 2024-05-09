@@ -68,6 +68,7 @@ const Profile = () => {
           username={result?.firstName || "Unknown"}
           score={result?.score}
           questionsAsked={result?.questions?.length}
+          profilePic={result.profile_image}
         />
         <div className="menu">
           <div></div>

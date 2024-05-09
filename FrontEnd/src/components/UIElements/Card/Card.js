@@ -10,7 +10,7 @@ import {
 } from "react-icons/md";
 import { FaShareSquare } from "react-icons/fa";
 import { AuthContext } from "../../../utils/context-API";
-import questionImage from "../../../assets/image 3.png";
+// import questionImage from "../../../assets/image 3.png";
 import { getRelativeTimestamp } from "../../../utils/timeChange";
 import useHttp from "../../../utils/hooks/http-hook";
 import avatar from "../../../assets/avatar.webp";
@@ -34,6 +34,7 @@ const Card = (props) => {
     postImage,
     isEdited,
     answers,
+    image: questionImage,
   } = props.data;
   // const { onDeleteQuestion } = props; // used to update question list when question is deleted
   const { questionStateHandler } = props;
@@ -42,7 +43,10 @@ const Card = (props) => {
   const [isDescripExpanded, setIsDescripExpanded] = useState(false);
   const [isAnswersOpen, setIsAnswerOpen] = useState(false);
   const [answerInput, setAnswerInput] = useState("");
-
+  const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
+  {
+    questionImage && console.log(imageURL);
+  }
   useEffect(() => {
     // console.log(props.data._id);
     console.log(userId, author._id, isMine);
@@ -202,9 +206,11 @@ const Card = (props) => {
           </p>
         </div>
 
-        <div className="image-container">
-          <img src={questionImage} alt={postImage} className="post-image" />
-        </div>
+        {questionImage && (
+          <div className="image-container">
+            <img src={imageURL} alt="questionImage" className="post-image" />
+          </div>
+        )}
       </div>
       <div className="card-footer">
         {/* <span className="like-btn">

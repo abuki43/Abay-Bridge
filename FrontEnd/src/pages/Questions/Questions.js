@@ -62,12 +62,13 @@ const Questions = () => {
     fetchQuestions(1);
   }, []); // use efffect runs  when the page first reloads
 
-  const fetchQuestions = async (page) => {
+  const fetchQuestions = async (page, searchQuery = "") => {
     try {
       console.log(selectedLevels, selectedSubjects);
       const filters = {
         levels: selectedLevels,
         subjects: selectedSubjects,
+        search: searchQuery,
       };
       const queryParams = new URLSearchParams(filters);
       console.log(queryParams);
@@ -93,6 +94,13 @@ const Questions = () => {
     [selectedLevels, selectedSubjects]
   );
 
+  const handleSearch = useCallback((searchQuery) => {
+    // setSelectedLevels([]);
+    // setSelectedSubjects([]);
+    setCurrentPage(1);
+    fetchQuestions(currentPage, searchQuery);
+  }, []);
+
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
     fetchQuestions(currentPage + 1);
@@ -116,7 +124,7 @@ const Questions = () => {
     <div className="questionsPage">
       {isLoading && <Loader />}
       <NavBar />
-      <QuestionsHero />
+      <QuestionsHero onSearch={handleSearch} />
 
       <div className="questionsContainer">
         <MemoizedFilterOptions

@@ -79,13 +79,12 @@ const AskQuestion = () => {
         formData.append("description", data.description);
         formData.append("level", data.level);
         formData.append("subject", data.subject);
-        // selectedImage && formData.append("image", selectedImage);
-        console.log(formData, data, selectedImage);
+        formData.append("image", selectedImage);
+        console.log(formData, selectedImage);
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/questions/${userId}`,
           "POST",
-          JSON.stringify(data),
-          { "Content-Type": "application/json" }
+          formData
         );
 
         toast.success("Posted!");
@@ -101,7 +100,7 @@ const AskQuestion = () => {
         formData.append("description", data.description);
         formData.append("level", data.level);
         formData.append("subject", data.subject);
-        // selectedImage && formData.append("image", selectedImage);
+        selectedImage && formData.append("image", selectedImage);
 
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/questions/${QID}`,
@@ -182,15 +181,14 @@ const AskQuestion = () => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) =>
-                    setSelectedImage(URL.createObjectURL(e.target.files[0]))
-                  }
+                  onChange={(e) => setSelectedImage(e.target.files[0])}
                 />
                 Upload Image
               </label>
               {selectedImage && (
                 <div className="selectImageContainer">
-                  <img src={selectedImage} alt="Selected" />
+                  {/* <img src={selectedImage} alt="Selected" /> */}
+                  <p>{selectedImage?.name}</p>
                 </div>
               )}
             </div>

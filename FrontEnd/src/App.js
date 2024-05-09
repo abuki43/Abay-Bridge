@@ -1,6 +1,6 @@
 import react from "react";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify-modernize";
 import ScrollToTop from "react-scroll-to-top";
 import { AuthContext } from "./utils/context-API";
@@ -17,6 +17,8 @@ import AboutPage from "./pages/About/About";
 
 function App() {
   const { userId, token, login, logout } = useAuth();
+  const location = useLocation();
+  const showScrollToTop = location.pathname !== "/askAI";
   return (
     <>
       <AuthContext.Provider
@@ -34,7 +36,7 @@ function App() {
           pauseOnHover={false}
           theme="dark"
         />
-        <ScrollToTop smooth color="black" />
+        {showScrollToTop && <ScrollToTop smooth color="black" top={40} />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Signup state={false} />} />

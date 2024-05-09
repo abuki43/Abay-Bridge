@@ -26,28 +26,33 @@ const EditProfile = ({ data }) => {
       level: data.level,
     },
   });
-
+  console.log(data.profile_image);
   const [profileImage, setProfileImage] = useState(null);
+  const imageURL = `${process.env.REACT_APP_ASSETS_URL}${data.profile_image}`;
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    setProfileImage(file);
   };
 
   const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    formData.append("firstName", data.firstName);
+    formData.append("lastName", data.lastName);
+    formData.append("email", data.email);
+    formData.append("level", data.level);
+    formData.append("mobileNumber", data.mobileNumber);
+    if (profileImage) {
+      formData.append("image", profileImage);
+    }
+
     try {
       console.log(userId);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/me/${userId}`,
         "PATCH",
-        JSON.stringify(data),
-        { "Content-Type": "application/json" }
+        formData
       );
 
       if (error) {
@@ -84,12 +89,8 @@ const EditProfile = ({ data }) => {
           />
           <label htmlFor="profileImagePicker">
             <div className="profileImageWrapper">
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                  className="profileImage"
-                />
+              {data.profile_image ? (
+                <img src={imageURL} alt="Profile" className="profileImage" />
               ) : (
                 <img
                   src="https://th.bing.com/th?id=OIP.JBpgUJhTt8cI2V05-Uf53AHaG1&w=260&h=240&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
