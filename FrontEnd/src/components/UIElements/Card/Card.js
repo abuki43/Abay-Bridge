@@ -18,6 +18,7 @@ import "./card.css";
 import Loader from "../Loader/Loader";
 import AnswerCard from "../AnswerCard/AnswerCard";
 import AnswersList from "../../UIComponents/AnswerList/AnswerList";
+import SharePopup from "../../UIElements/SharePopUp/SharePopup";
 
 const Card = (props) => {
   const { sendRequest, error, isLoading, clearError } = useHttp();
@@ -36,7 +37,7 @@ const Card = (props) => {
     answers,
     image: questionImage,
   } = props.data;
-  // const { onDeleteQuestion } = props; // used to update question list when question is deleted
+
   const { questionStateHandler } = props;
   const [isMine, setIsMine] = useState(false); // check if the question belongs to the person logged in
   const [showCardOptions, setCardOptions] = useState(false);
@@ -44,13 +45,19 @@ const Card = (props) => {
   const [isAnswersOpen, setIsAnswerOpen] = useState(false);
   const [answerInput, setAnswerInput] = useState("");
   const [questionAnswers, setQuestionAnswers] = useState([]);
+  const [showSharePopup, setShowSharePopup] = useState(false); // State for share popup
+
   const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
   const profileImage = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
+  const shareUrl = `${process.env.REACT_APP_URL}/question/${id}`;
+
   useEffect(() => {
     if (author._id == userId) {
       setIsMine(true);
     }
   }, []);
+
+  const toggleSharePopup = () => setShowSharePopup((prev) => !prev); // Toggle share popup
 
   const toggleCardOptions = () => {
     setCardOptions((prev) => !prev);
@@ -167,6 +174,16 @@ const Card = (props) => {
           editHandler={handleEdit}
         />
       )}
+
+      {showSharePopup && (
+        <SharePopup
+          shareUrl={shareUrl}
+          title={title}
+          description={description}
+          toggleSharePopup={toggleSharePopup}
+        />
+      )}
+
       {isLoading && <Loader />}
       <div className="header">
         <div className="authorProfileImage">
@@ -218,7 +235,7 @@ const Card = (props) => {
             {answers ? answers.length : ""} answers
           </p>
         </span>
-        <span className="share-btn">
+        <span className="share-btn" onClick={toggleSharePopup}>
           <FaShareSquare />
         </span>
       </div>

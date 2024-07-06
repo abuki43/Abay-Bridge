@@ -11,6 +11,7 @@ function FilterOptions({
   selectedLevels,
   selectedSubjects,
   onApplyFilters,
+  onClearFilters,
 }) {
   const [tempSelectedLevels, setTempSelectedLevels] = useState(selectedLevels);
   const [tempSelectedSubjects, setTempSelectedSubjects] =
@@ -62,10 +63,17 @@ function FilterOptions({
     onApplyFilters(tempSelectedLevels, tempSelectedSubjects);
   };
 
+  const handleClearFiltersClick = () => {
+    setTempSelectedLevels([]);
+    setTempSelectedSubjects([]);
+    onClearFilters();
+  };
+
   const handleShowMoreSubjects = () => {
     setShowAllSubjects((prev) => !prev);
   };
-
+  const showClearFiltersButton =
+    tempSelectedLevels.length > 0 || tempSelectedSubjects.length > 0;
   return (
     <>
       <div className="desk-hide-inline ">
@@ -157,6 +165,14 @@ function FilterOptions({
             Apply Filters
           </button>
         </div>
+        {showClearFiltersButton && (
+          <button
+            className="clear-filters-button"
+            onClick={handleClearFiltersClick}
+          >
+            Clear Filters
+          </button>
+        )}
       </div>
     </>
   );

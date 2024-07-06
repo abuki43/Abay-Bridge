@@ -9,7 +9,9 @@ import avatar from "../../../assets/avatar.webp";
 import "./AnswerCard.css";
 
 const AnswerCard = ({ answerData }) => {
+  const { sendRequest, isLoading } = useHttp();
   const { isLoggedIn, userId } = useContext(AuthContext);
+  console.log(answerData);
   const {
     _id: answerId,
     content,
@@ -52,11 +54,11 @@ const AnswerCard = ({ answerData }) => {
       return;
     }
     try {
-      // Simulate server request
-      // Replace with actual API call
-      const response = { message: "Upvoted successfully." };
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/upvote/${answerId}/${userId}`,
+        "POST"
+      );
 
-      // Update upvote state
       setUpvoteState((prevState) => ({
         ...prevState,
         isUpvoted: true,
@@ -85,9 +87,10 @@ const AnswerCard = ({ answerData }) => {
       return;
     }
     try {
-      // Simulate server request
-      // Replace with actual API call
-      const response = { message: "Downvoted successfully." };
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/downvote/${answerId}/${userId}`,
+        "POST"
+      );
 
       // Update downvote state
       setDownvoteState((prevState) => ({

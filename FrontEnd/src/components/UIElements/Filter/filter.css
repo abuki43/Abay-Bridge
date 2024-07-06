@@ -154,6 +154,19 @@
   background-repeat: no-repeat;
   background-position: center; /* Center the fill */
 }
+.clear-filters-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 20px;
+  width: 117px;
+  margin: auto;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
 
 @media (min-width: 950px) {
   .filter-options {
