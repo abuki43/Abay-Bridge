@@ -11,7 +11,7 @@ const LandingHero = () => {
       <h4>Building Connections, Bridging Knowledge Gaps</h4>
       <div className="buttons">
         <Button color="black" padI="4.4">
-          <Link to="/Signup">Get started</Link>
+          <Link to="/login">Get started</Link>
         </Button>
         <Button color="transparent" padI="4.4" padB="0.54">
           <Link to="/questions">Guest mode</Link>

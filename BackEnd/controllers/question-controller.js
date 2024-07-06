@@ -6,9 +6,8 @@ const User = require("../models/user");
 const HttpError = require("../models/http-error");
 const { questionValidator } = require("../validator/questionValidator");
 
-const questions = [];
-
 const newQuestion = async (req, res, next) => {
+  console.log(req.body);
   const { error } = questionValidator(req.body);
   if (error) {
     console.log(req.body, error.details[0].message);
@@ -45,6 +44,7 @@ const newQuestion = async (req, res, next) => {
     answers: [],
     date_posted: Date.now(),
     author: userId,
+    image: req.file?.path || "",
   });
 
   let sess;
@@ -159,7 +159,6 @@ const deleteQuestion = async (req, res, next) => {
 
 const getQuestions = async (req, res, next) => {
   const page = parseInt(req.params.page);
-  console.log(page);
   const perPage = 10;
 
   try {
@@ -167,7 +166,8 @@ const getQuestions = async (req, res, next) => {
 
     const levels = req.query.levels ? req.query.levels.split(",") : [];
     const subjects = req.query.subjects ? req.query.subjects.split(",") : [];
-    console.log(levels, subjects);
+    const search = req.query.search ? req.query.search : "";
+
     // Check if filter options are provided and not equal to "ALL"
     if (levels.length > 0 && !levels.includes("ALL")) {
       query.level = { $in: levels }; // Add level filter to the query
@@ -177,6 +177,13 @@ const getQuestions = async (req, res, next) => {
       query.subject = { $in: subjects }; // Add subject filter to the query
     }
 
+    if (search !== "") {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
     const totalQuestions = await Question.countDocuments(query); // Get the total number of filtered questions in the database
     const startIndex = (page - 1) * perPage;
 
@@ -184,20 +191,21 @@ const getQuestions = async (req, res, next) => {
     const paginatedQuestions = await Question.find(query)
       .populate({
         path: "author",
-        select: "firstName profilePicture score",
+        select: "firstName profile_image score",
       })
       .populate({
         path: "answers",
         populate: {
           path: "author",
-          select: "firstName profilePicture score",
+          select: "firstName profile_image score",
         },
       })
+      .sort({ createdAt: -1 })
       .skip(startIndex)
       .limit(perPage);
-
+    console.log(paginatedQuestions);
     res.json({
-      questions: paginatedQuestions,
+      questions: paginatedQuestions.reverse(),
       totalPages: Math.ceil(totalQuestions / perPage), // Calculate the total number of pages
     });
   } catch (e) {

@@ -8,40 +8,71 @@ import useHttp from "../../../utils/hooks/http-hook";
 import avatar from "../../../assets/avatar.webp";
 import "./AnswerCard.css";
 
-const AnswerCard = ({ answerData, questionStateHandler }) => {
-  const { sendRequest, error, clearError } = useHttp();
+const AnswerCard = ({ answerData }) => {
   const { isLoggedIn, userId } = useContext(AuthContext);
   const {
     _id: answerId,
     content,
     date_posted,
     author,
-    upVote,
-    downVote,
+    upVote: upvotes,
+    downVote: downvotes,
     question,
     parentAnswer,
   } = answerData;
-  const [isUpvoted, setUpvoted] = useState(upVote.includes(userId));
-  const [isDownvoted, setDownvoted] = useState(downVote.includes(userId));
+
+  // State for upvotes
+  const [upvoteState, setUpvoteState] = useState({
+    isUpvoted: upvotes.includes(userId),
+    upvotesLength: upvotes.length,
+  });
+
+  // State for downvotes
+  const [downvoteState, setDownvoteState] = useState({
+    isDownvoted: downvotes.includes(userId),
+    downvotesLength: downvotes.length,
+  });
+
+  const profileURL = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
 
   useEffect(() => {
-    setUpvoted(upVote.includes(userId));
-    setDownvoted(downVote.includes(userId));
-  }, [upVote, downVote]);
+    setUpvoteState({
+      isUpvoted: upvotes.includes(userId),
+      upvotesLength: upvotes.length,
+    });
+    setDownvoteState({
+      isDownvoted: downvotes.includes(userId),
+      downvotesLength: downvotes.length,
+    });
+  }, [upvotes, downvotes, userId]);
+
   const handleUpvote = async () => {
     if (!isLoggedIn) {
       toast.info("Please login first!");
       return;
     }
     try {
-      let response;
+      // Simulate server request
+      // Replace with actual API call
+      const response = { message: "Upvoted successfully." };
 
-      response = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/answer/upvote/${answerId}/${userId}`,
-        "POST"
-      );
+      // Update upvote state
+      setUpvoteState((prevState) => ({
+        ...prevState,
+        isUpvoted: true,
+        upvotesLength: prevState.upvotesLength + 1,
+      }));
+
+      // If already downvoted, toggle downvote
+      if (downvoteState.isDownvoted) {
+        setDownvoteState((prevState) => ({
+          ...prevState,
+          isDownvoted: false,
+          downvotesLength: prevState.downvotesLength - 1,
+        }));
+      }
+
       toast.success(response.message);
-      questionStateHandler("upvote", question, { answerId: answerId });
     } catch (error) {
       toast.error("Failed to upvote. Please try again.");
       console.log(error);
@@ -54,17 +85,27 @@ const AnswerCard = ({ answerData, questionStateHandler }) => {
       return;
     }
     try {
-      let response;
+      // Simulate server request
+      // Replace with actual API call
+      const response = { message: "Downvoted successfully." };
 
-      response = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/answer/downvote/${answerId}/${userId}`,
-        "POST"
-      );
-      console.log(response);
-      setDownvoted(false);
+      // Update downvote state
+      setDownvoteState((prevState) => ({
+        ...prevState,
+        isDownvoted: true,
+        downvotesLength: prevState.downvotesLength + 1,
+      }));
+
+      // If already upvoted, toggle upvote
+      if (upvoteState.isUpvoted) {
+        setUpvoteState((prevState) => ({
+          ...prevState,
+          isUpvoted: false,
+          upvotesLength: prevState.upvotesLength - 1,
+        }));
+      }
 
       toast.success(response.message);
-      questionStateHandler("downvote", question, { answerId: answerId });
     } catch (error) {
       toast.error("Failed to downvote. Please try again.");
       console.log(error);
@@ -78,7 +119,7 @@ const AnswerCard = ({ answerData, questionStateHandler }) => {
       <div className="answer-header">
         <div className="answer-author">
           <img
-            src={author.profile_image || avatar}
+            src={author.profile_image ? profileURL : avatar}
             alt="user"
             className="answer-avatar"
           />
@@ -92,14 +133,20 @@ const AnswerCard = ({ answerData, questionStateHandler }) => {
       <div className="answer-footer">
         <div className="answer-actions">
           <div className="answer-action" onClick={handleUpvote}>
-            <BiUpvote className={`answer-icon ${isUpvoted ? "upvoted" : ""}`} />
-            <span>{upVote.length}</span>
+            <BiUpvote
+              className={`answer-icon ${
+                upvoteState.isUpvoted ? "upvoted" : ""
+              }`}
+            />
+            <span>{upvoteState.upvotesLength}</span>
           </div>
           <div className="answer-action" onClick={handleDownvote}>
             <BiDownvote
-              className={`answer-icon ${isDownvoted ? "downvoted" : ""}`}
+              className={`answer-icon ${
+                downvoteState.isDownvoted ? "downvoted" : ""
+              }`}
             />
-            <span>{downVote.length}</span>
+            <span>{downvoteState.downvotesLength}</span>
           </div>
         </div>
       </div>

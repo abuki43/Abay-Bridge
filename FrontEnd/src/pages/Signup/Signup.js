@@ -92,6 +92,11 @@ const Signup = ({ state }) => {
     setIsSignUp((prev) => !prev);
   };
 
+  const guestLogin = () => {
+    navigate("/questions");
+    toast.success("Logged in as guest!");
+  };
+
   return (
     <>
       <div className="bg-gradient"></div>
@@ -247,6 +252,12 @@ const Signup = ({ state }) => {
           <p>
             {isSignUp ? "Already have an account? " : "Create an account? "}
             <span onClick={changeSignup}>{isSignUp ? "Login" : "Signup"}</span>
+          </p>
+          <p>
+            Don't want to {isSignUp ? "Signup" : "Login"}?{" "}
+            <span onClick={guestLogin} className="guestMode">
+              Continue as guest
+            </span>
           </p>
         </div>
       </div>

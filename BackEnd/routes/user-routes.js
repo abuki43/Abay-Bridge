@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fileUpload = require("../middleware/file-upload");
 
 const checkAuth = require("../middleware/check-auth");
 
@@ -24,6 +25,6 @@ router.get("/me/:UID", myProfile);
 
 router.get("/myQuestions/:UID", myQuestions);
 
-router.patch("/me/:UID", updateProfile);
+router.patch("/me/:UID", fileUpload.single("image"), updateProfile);
 
 module.exports = router;

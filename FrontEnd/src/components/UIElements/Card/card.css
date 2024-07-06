@@ -19,15 +19,26 @@
   align-items: center;
   padding: 0 16px;
 }
-
-.avatar {
-  width: 48px;
+.authorProfileImage {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
   border-radius: 50%;
-  cursor: pointer;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+}
+
+.authorProfileImage img.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .user-info {
   display: flex;
+  justify-content: left;
   flex-direction: column;
   margin-left: 8px;
 }
@@ -39,6 +50,7 @@
   line-height: normal;
   cursor: default;
   color: #4f46e5;
+  padding-left: 0;
 }
 
 .level-subj,
@@ -47,7 +59,7 @@
   margin-top: 0;
   color: #777777;
   text-align: left;
-  padding-left: 20px;
+  padding-left: 0px;
 }
 .level-subj {
   font-size: 16px;
@@ -145,7 +157,7 @@
 
 .send-btn {
   height: 100%;
-
+  padding-inline: 7px;
   border-radius: 4px;
   background-color: #4f46e5;
   color: white;

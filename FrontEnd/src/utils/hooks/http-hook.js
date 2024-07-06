@@ -28,6 +28,7 @@ export default function useHttp() {
         });
         clearTimeout(timeoutId); // Clear the timeout if the request completes within the timeout duration
         const data = await response.json();
+        console.log(data);
 
         if (!response.ok) {
           throw new Error(data.message);

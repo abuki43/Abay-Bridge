@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const fileUpload = require("../middleware/file-upload");
 const {
   newQuestion,
   editQuestion,
@@ -14,9 +15,9 @@ const {
 // router.use(checkAuth);
 router.get("/save/:QID/:UID", saveQuestion);
 
-router.get("/:page", getQuestions);
+router.post("/:UID", fileUpload.single("image"), newQuestion);
 
-router.post("/:UID", newQuestion);
+router.get("/:page", getQuestions);
 
 router.patch("/:QID", editQuestion);
 

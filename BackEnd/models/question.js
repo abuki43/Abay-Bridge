@@ -10,6 +10,7 @@ const questionSchema = new Schema({
   subject: { type: String },
   answers: [{ type: mongoose.Types.ObjectId, ref: "Answer" }],
   isEdited: { type: Boolean, default: false },
+  image: { type: String, required: false },
 });
 
 module.exports = mongoose.model("Question", questionSchema);

@@ -65,11 +65,40 @@ const postAnswer = async (req, res, next) => {
   res.json("new answer posted.");
 };
 
+// const getAnswers = async (req, res, next) => {
+//   const { QID } = req.params;
+
+//   try {
+//     const question = await Question.findById(QID).populate("answers");
+
+//     if (!question) {
+//       const error = new HttpError("Could not find a question.", 404);
+//       return next(error);
+//     }
+
+//     const answers = question.answers;
+
+//     res.status(200).json({ answers });
+//   } catch (err) {
+//     const error = new HttpError(
+//       "Failed finding answers , please try again.",
+//       500
+//     );
+//     return next(error);
+//   }
+// };
 const getAnswers = async (req, res, next) => {
   const { QID } = req.params;
 
   try {
-    const question = await Question.findById(QID).populate("answers");
+    const question = await Question.findById(QID).populate({
+      path: "answers",
+      populate: {
+        path: "author",
+        model: "User",
+        select: "firstName lastName profile_image",
+      },
+    });
 
     if (!question) {
       const error = new HttpError("Could not find a question.", 404);
@@ -81,11 +110,13 @@ const getAnswers = async (req, res, next) => {
     res.status(200).json({ answers });
   } catch (err) {
     const error = new HttpError(
-      "Failed finding answers , please try again.",
+      "Failed finding answers, please try again.",
       500
     );
     return next(error);
   }
 };
+
+module.exports = getAnswers;
 
 module.exports = { postAnswer, getAnswers };

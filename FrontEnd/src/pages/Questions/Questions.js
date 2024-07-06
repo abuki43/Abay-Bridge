@@ -41,25 +41,12 @@ const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const data = {
-    avatarImage: "",
-    username: "Al-Abuki",
-    timestamp: "11 hours ago",
-    subject: "Biology",
-    title: "Any one who can help me with my Biology assignment?",
-    description:
-      "lorem epsum lorem epsum lorem epsum lorem epsum lorem epsum 110 lorem epsumm lorem epsum lorem epsum lorem epsum lorem epsum lorem epsum lorem epsum",
-    postImage: "",
-    likes: 50,
-    answers: 11,
-    shares: 20,
-  };
-
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
   useEffect(() => {
     fetchQuestions(1);
+    console.log("use effect");
   }, []); // use efffect runs  when the page first reloads
 
   const fetchQuestions = async (page, searchQuery = "") => {

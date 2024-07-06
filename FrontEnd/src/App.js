@@ -1,7 +1,6 @@
-import react from "react";
-
+import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify-modernize";
+import { ToastContainer } from "react-toastify-modernize";
 import ScrollToTop from "react-scroll-to-top";
 import { AuthContext } from "./utils/context-API";
 import useAuth from "./utils/hooks/Auth-hook";
@@ -14,6 +13,7 @@ import Profile from "./pages/Profile/Profile";
 import "react-toastify-modernize/dist/ReactToastify.css";
 import AskAI from "./pages/AskAI/AskAI";
 import AboutPage from "./pages/About/About";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
   const { userId, token, login, logout } = useAuth();
@@ -41,9 +41,30 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Signup state={false} />} />
           <Route path="/signup" element={<Signup state={true} />} />
-          <Route path="/questions" element={<Questions />} />
-          <Route path="/ask" element={<AskQuestion />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/questions"
+            element={
+              <PrivateRoute>
+                <Questions />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/ask"
+            element={
+              <PrivateRoute>
+                <AskQuestion />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
           <Route path="/askAI" element={<AskAI />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>

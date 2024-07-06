@@ -26,33 +26,36 @@ const EditProfile = ({ data }) => {
       level: data.level,
     },
   });
-  console.log(data.profile_image);
+
   const [profileImage, setProfileImage] = useState(null);
-  const imageURL = `${process.env.REACT_APP_ASSETS_URL}${data.profile_image}`;
+  const [imagePreview, setImagePreview] = useState(
+    `${process.env.REACT_APP_ASSETS_URL}${data.profile_image}`
+  );
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setProfileImage(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
+  const onSubmit = async (formData) => {
+    const data = new FormData();
 
-    formData.append("firstName", data.firstName);
-    formData.append("lastName", data.lastName);
-    formData.append("email", data.email);
-    formData.append("level", data.level);
-    formData.append("mobileNumber", data.mobileNumber);
+    data.append("firstName", formData.firstName);
+    data.append("lastName", formData.lastName);
+    data.append("email", formData.email);
+    data.append("level", formData.level);
+    data.append("mobileNumber", formData.mobileNumber);
+
     if (profileImage) {
-      formData.append("image", profileImage);
+      data.append("image", profileImage);
     }
 
     try {
-      console.log(userId);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/me/${userId}`,
         "PATCH",
-        formData
+        data
       );
 
       if (error) {
@@ -61,7 +64,6 @@ const EditProfile = ({ data }) => {
       navigate("/questions");
       toast.success("Profile Updated!");
     } catch (e) {
-      // toast(e.message);
       console.log(error);
     }
   };
@@ -89,8 +91,12 @@ const EditProfile = ({ data }) => {
           />
           <label htmlFor="profileImagePicker">
             <div className="profileImageWrapper">
-              {data.profile_image ? (
-                <img src={imageURL} alt="Profile" className="profileImage" />
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Profile"
+                  className="profileImage"
+                />
               ) : (
                 <img
                   src="https://th.bing.com/th?id=OIP.JBpgUJhTt8cI2V05-Uf53AHaG1&w=260&h=240&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"

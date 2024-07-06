@@ -71,7 +71,6 @@ function FilterOptions({
       <div className="desk-hide-inline ">
         <Button color="filter" padI="0" onClick={ShowFilterMobile}>
           <FaFilter className="filter-mob-icon" />
-          {/* Filter */}
         </Button>
       </div>
 
@@ -80,14 +79,20 @@ function FilterOptions({
       )}
 
       <div className={`filter-options ${isFilterMobile && "open"} `}>
-        {isFilterMobile && (
-          <div className="mobFilterClose desk-hide" onClick={hideFilterMobile}>
-            <IoMdCloseCircleOutline />
-          </div>
-        )}
         <div className="filter-header">
-          <FaFilter className="filter-icon" />
-          <h2 className="filter-title">Filters</h2>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <FaFilter className="filter-icon" />
+            <h2 className="filter-title">Filters</h2>
+          </div>
+
+          {isFilterMobile && (
+            <div
+              className="mobFilterClose desk-hide"
+              onClick={hideFilterMobile}
+            >
+              <IoMdCloseCircleOutline />
+            </div>
+          )}
         </div>
         <div className="filter-section">
           <h3

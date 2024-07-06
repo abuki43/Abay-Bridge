@@ -12,6 +12,7 @@ const questionValidator = (question) => {
         "Other"
       )
       .required(),
+    image: Joi.any(),
     subject: Joi.string().min(3).max(1000).required(),
   });
   return schema.validate(question);

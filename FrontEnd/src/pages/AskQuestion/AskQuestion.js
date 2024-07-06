@@ -74,19 +74,18 @@ const AskQuestion = () => {
           return;
         }
         const formData = new FormData();
-
+        console.log(data);
         formData.append("title", data.title);
         formData.append("description", data.description);
         formData.append("level", data.level);
         formData.append("subject", data.subject);
         formData.append("image", selectedImage);
-        console.log(formData, selectedImage);
+        console.log(formData, selectedImage, data);
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/questions/${userId}`,
           "POST",
           formData
         );
-
         toast.success("Posted!");
         navigate("/profile");
       } catch (error) {
@@ -160,8 +159,8 @@ const AskQuestion = () => {
               <select {...register("level")} id="level">
                 <option value="Primary School">Primary School</option>
                 <option value="Secondary School">Secondary School</option>
-                <option value="University(College)">Universiy/College</option>
-                <option value="other">Other</option>
+                <option value="University/College">Universiy/College</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
@@ -187,8 +186,12 @@ const AskQuestion = () => {
               </label>
               {selectedImage && (
                 <div className="selectImageContainer">
-                  {/* <img src={selectedImage} alt="Selected" /> */}
-                  <p>{selectedImage?.name}</p>
+                  {selectedImage && (
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Selected"
+                    />
+                  )}{" "}
                 </div>
               )}
             </div>

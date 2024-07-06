@@ -43,13 +43,10 @@ const Card = (props) => {
   const [isDescripExpanded, setIsDescripExpanded] = useState(false);
   const [isAnswersOpen, setIsAnswerOpen] = useState(false);
   const [answerInput, setAnswerInput] = useState("");
+  const [questionAnswers, setQuestionAnswers] = useState([]);
   const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
-  {
-    questionImage && console.log(imageURL);
-  }
+  const profileImage = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
   useEffect(() => {
-    // console.log(props.data._id);
-    console.log(userId, author._id, isMine);
     if (author._id == userId) {
       setIsMine(true);
     }
@@ -64,6 +61,7 @@ const Card = (props) => {
 
   const toggleAnswer = () => {
     setIsAnswerOpen((prev) => !prev);
+    fetchAnswer();
   };
 
   const date = getRelativeTimestamp(date_posted);
@@ -115,35 +113,37 @@ const Card = (props) => {
     }
   };
 
-  const submitAnswer = async () => {
-    console.log("submitted", answerInput);
+  const submitAnswer = async (answer, QID = props.data._id) => {
+    console.log("submitted", answer);
     if (!isLoggedIn) {
       toast.info("Please login to answer a question!");
       return;
     }
-    if (answerInput) {
-      try {
-        const response = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/answer/${userId}/${props.data._id}`,
-          "POST",
-          JSON.stringify({ content: answerInput }),
-          { "Content-Type": "application/json" }
-        );
-        const newAnswer = {
-          author: { _id: userId },
-          content: answerInput,
-          upVote: [],
-          downVote: [],
-          question: id,
-          date_posted: Date.now(),
-          _id: Math.random() * 10000,
-        };
-        toast.success("Question Answered!");
-        questionStateHandler("addanswer", id, newAnswer);
-        setAnswerInput("");
-      } catch (e) {
-        console.log(e);
-      }
+
+    try {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/${userId}/${QID}`,
+        "POST",
+        JSON.stringify({ content: answerInput || answer }),
+        { "Content-Type": "application/json" }
+      );
+      console.log(response);
+      toast.success("Question Answered!");
+      setAnswerInput("");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchAnswer = async () => {
+    try {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/answer/${props.data._id}`,
+        "GET"
+      );
+      setQuestionAnswers(response);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -151,9 +151,10 @@ const Card = (props) => {
     <div className="card-container">
       {isAnswersOpen && (
         <AnswersList
-          answers={answers}
+          answers={questionAnswers}
           onClose={toggleAnswer}
-          questionStateHandler={questionStateHandler}
+          isLoading={isLoading}
+          submitAnswer={submitAnswer}
         />
       )}
 
@@ -168,17 +169,11 @@ const Card = (props) => {
       )}
       {isLoading && <Loader />}
       <div className="header">
-        <div>
-          <a href={""}>
-            <img
-              src={author.profile_image || avatar}
-              alt="user"
-              className="avatar"
-            />
-          </a>
+        <div className="authorProfileImage">
+          <img src={profileImage || avatar} alt="user" className="avatar" />
         </div>
         <div className="user-info">
-          <a href={""} className="username">
+          <a href="" className="username">
             {author.firstName}
           </a>
           <p className="timestamp">{date} </p>
@@ -264,7 +259,7 @@ const CardOptions = ({
         <div className="content">
           <div className="action-button" onClick={saveHandler}>
             <CiSaveDown1 />
-            <p>Save</p>
+            <p>Save/Unsave</p>
           </div>
           {isMine && (
             <>

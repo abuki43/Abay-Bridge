@@ -8,7 +8,7 @@
   padding: 2rem 2rem;
   position: relative;
 }
-.bg-gradient {
+/* .bg-gradient {
   background: linear-gradient(
     0deg,
     rgba(51, 210, 231, 0.5) 20%,
@@ -21,7 +21,7 @@
   transform: translateX(-50%) translateY(50%);
   width: 100%;
   z-index: -1;
-}
+} */
 
 .AskQuestionPage .form-container {
   width: 100%;

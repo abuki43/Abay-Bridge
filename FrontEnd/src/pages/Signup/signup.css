@@ -112,6 +112,13 @@ form .signupBtn {
 
 span {
   cursor: pointer;
+  text-decoration: underline;
+}
+
+.guestMode {
+  cursor: pointer;
+  color: var(--color-b3);
+  text-decoration: underline;
 }
 
 @media (min-width: 600px) {

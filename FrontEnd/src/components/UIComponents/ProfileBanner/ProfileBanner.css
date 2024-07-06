@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: flex-end;
   padding: 30px 30px;
-  background-image: url("../../../assets/profileBanner.png");
+  background-image: url("../../../assets/profileBanner3.jpg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -60,7 +60,7 @@
   font-size: 20px;
 }
 
-.follow-button {
+.logout-button {
   background-color: #007791;
   color: white;
   border: none;
@@ -68,10 +68,9 @@
   border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-@media (min-width: 960px) {
-  .profile-banner {
-    height: 230px;
-  }
+.logout-button:hover {
+  background-color: #005f6b;
 }

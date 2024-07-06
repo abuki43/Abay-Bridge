@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu, GiArtificialHive } from "react-icons/gi";
 import { IoMdCloseCircleOutline, IoMdHome } from "react-icons/io";
-import { FcAbout } from "react-icons/fc";
+import { IoInformationSharp } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import Button from "../../UIElements/Button/Button";
 import BackDrop from "../../UIElements/BackDrop/BackDrop";
@@ -91,7 +91,7 @@ const SideBar = ({ isOpen, close, isLoggedIn, logout }) => {
               <p>Ask AI</p>
             </Link>
             <Link to="/about">
-              <FcAbout />
+              <IoInformationSharp />
               <p>About</p>
             </Link>
             {isLoggedIn && (
@@ -110,12 +110,12 @@ const SideBar = ({ isOpen, close, isLoggedIn, logout }) => {
               </Button>
             )}
             {isLoggedIn && (
-              <Button color="black">
+              <Button color="black" padI="4">
                 <Link to="/ask">Ask question</Link>
               </Button>
             )}
             {isLoggedIn && (
-              <Button color="inverse" onClick={logout}>
+              <Button color="inverse" padI="4" padB="0.54" onClick={logout}>
                 logout
               </Button>
             )}

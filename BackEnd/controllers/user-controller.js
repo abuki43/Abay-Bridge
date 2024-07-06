@@ -230,8 +230,20 @@ const myProfile = async (req, res, next) => {
     // user = await User.findById(req.userData.userId).select("-password");
     user = await User.findById(UID)
       .select("-password")
-      .populate("questions")
-      .populate("savedQuestions");
+      .populate({
+        path: "questions",
+        populate: {
+          path: "author",
+          select: "firstName profile_image",
+        },
+      })
+      .populate({
+        path: "savedQuestions",
+        populate: {
+          path: "author",
+          select: "firstName profile_image",
+        },
+      });
   } catch (err) {
     const error = new HttpError("Error finding user.", 500);
     return next(error);
@@ -250,7 +262,7 @@ const myQuestions = async (req, res, next) => {
 
   let user;
   try {
-    user = await User.findById(UID).populate("questions");
+    user = await User.findById(UID).populate("questions").sort({ date: -1 });
     res.json(user.questions);
   } catch {
     const error = new HttpError(
@@ -265,7 +277,7 @@ const updateProfile = async (req, res, next) => {
   const userId = req.params.UID;
 
   const { firstName, lastName, email, level, mobileNumber } = req.body;
-
+  console.log(req.body);
   const { error } = updateProfileValidator(req.body);
   if (error) {
     console.log(error.details[0].message);
@@ -285,6 +297,7 @@ const updateProfile = async (req, res, next) => {
     user.email = email;
     user.level = level;
     user.mobileNumber = mobileNumber;
+    user.profile_image = req.file?.path || "";
 
     try {
       await user.save();
