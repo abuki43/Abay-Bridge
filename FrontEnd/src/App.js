@@ -13,12 +13,15 @@ import Profile from "./pages/Profile/Profile";
 import "react-toastify-modernize/dist/ReactToastify.css";
 import AskAI from "./pages/AskAI/AskAI";
 import AboutPage from "./pages/About/About";
-import PrivateRoute from "./pages/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
+import RedirectLoggedIn from "./utils/RedirectLoggedIn";
+import SingleQuestionPage from "./pages/SingleQuestion/SingleQuestion";
 
 function App() {
   const { userId, token, login, logout } = useAuth();
   const location = useLocation();
   const showScrollToTop = location.pathname !== "/askAI";
+
   return (
     <>
       <AuthContext.Provider
@@ -38,17 +41,31 @@ function App() {
         />
         {showScrollToTop && <ScrollToTop smooth color="black" top={40} />}
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Signup state={false} />} />
-          <Route path="/signup" element={<Signup state={true} />} />
           <Route
-            path="/questions"
+            path="/"
             element={
-              <PrivateRoute>
-                <Questions />
-              </PrivateRoute>
+              <RedirectLoggedIn>
+                <LandingPage />
+              </RedirectLoggedIn>
             }
           />
+          <Route
+            path="/login"
+            element={
+              <RedirectLoggedIn>
+                <Signup state={false} />
+              </RedirectLoggedIn>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <RedirectLoggedIn>
+                <Signup state={true} />
+              </RedirectLoggedIn>
+            }
+          />
+          <Route path="/questions" element={<Questions />} />
           <Route
             path="/ask"
             element={
@@ -64,6 +81,10 @@ function App() {
                 <Profile />
               </PrivateRoute>
             }
+          />
+          <Route
+            path="/question/:questionId"
+            element={<SingleQuestionPage />}
           />
           <Route path="/askAI" element={<AskAI />} />
           <Route path="/about" element={<AboutPage />} />

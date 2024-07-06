@@ -20,19 +20,20 @@ const upvote = async (req, res, next) => {
     const error = new HttpError("Failed votng please try again", 500);
     return next(error);
   }
-
+  let message;
   if (answer.upVote.includes(UID)) {
     answer.upVote.pull(UID);
+    message = "user removed upvote";
   } else {
     answer.upVote.push(UID);
-
+    message = "user upvoted";
     // Remove user from downVote if they are switching their vote
     if (answer.downVote.includes(UID)) {
       answer.downVote.pull(UID);
     }
   }
   await answer.save();
-  res.json("user upvoted for an answer");
+  res.json({ message });
 };
 
 const downvote = async (req, res, next) => {
@@ -51,19 +52,21 @@ const downvote = async (req, res, next) => {
     const error = new HttpError("Failed votng please try again", 500);
     return next(error);
   }
+  let message;
 
   if (answer.downVote.includes(UID)) {
     answer.downVote.pull(UID);
+    message = "user removed downvote";
   } else {
     answer.downVote.push(UID);
-
+    message = "user downvoted";
     // Remove user from upVote if they are switching their vote
     if (answer.upVote.includes(UID)) {
       answer.upVote.pull(UID);
     }
   }
   await answer.save();
-  res.json("user downvoted for an answer");
+  res.json({ message });
 };
 
 module.exports = { upvote, downvote };

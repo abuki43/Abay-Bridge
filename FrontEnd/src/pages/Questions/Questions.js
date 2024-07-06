@@ -49,19 +49,21 @@ const Questions = () => {
     console.log("use effect");
   }, []); // use efffect runs  when the page first reloads
 
-  const fetchQuestions = async (page, searchQuery = "") => {
+  const fetchQuestions = async (
+    page,
+    searchQuery = "",
+    levels = selectedLevels,
+    subjects = selectedSubjects
+  ) => {
     try {
-      console.log(selectedLevels, selectedSubjects);
       const filters = {
-        levels: selectedLevels,
-        subjects: selectedSubjects,
+        levels: levels,
+        subjects: subjects,
         search: searchQuery,
       };
       const queryParams = new URLSearchParams(filters);
-      console.log(queryParams);
       const url = `${process.env.REACT_APP_BACKEND_URL}/questions/${page}?${queryParams}`;
       const response = await sendRequest(url, "GET");
-      console.log(response);
       if (error) {
         throw new Error(error);
       }
@@ -71,15 +73,19 @@ const Questions = () => {
     }
   };
 
-  const handleApplyFilters = useCallback(
-    (selectedLevels, selectedSubjects) => {
-      setSelectedLevels(selectedLevels);
-      setSelectedSubjects(selectedSubjects);
-      setCurrentPage(1);
-      fetchQuestions(1);
-    },
-    [selectedLevels, selectedSubjects]
-  );
+  const handleApplyFilters = useCallback((levels, subjects) => {
+    setSelectedLevels(levels);
+    setSelectedSubjects(subjects);
+    setCurrentPage(1);
+    fetchQuestions(1, "", levels, subjects);
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    setSelectedLevels([]);
+    setSelectedSubjects([]);
+    setCurrentPage(1);
+    fetchQuestions(1);
+  }, []);
 
   const handleSearch = useCallback((searchQuery) => {
     // setSelectedLevels([]);
@@ -107,6 +113,7 @@ const Questions = () => {
       });
     }
   }, [error, clearError]);
+
   return (
     <div className="questionsPage">
       {isLoading && <Loader />}
@@ -120,6 +127,7 @@ const Questions = () => {
           selectedLevels={selectedLevels}
           selectedSubjects={selectedSubjects}
           onApplyFilters={handleApplyFilters}
+          onClearFilters={handleClearFilters}
         />
         <div className="listOfQuestions">
           <h2 className="header">Questions</h2>

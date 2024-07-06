@@ -255,10 +255,41 @@ const saveQuestion = async (req, res, next) => {
   }
 };
 
+const singleQuestion = async (req, res, next) => {
+  const QID = req.params.QID;
+  console.log(QID);
+  let question;
+  try {
+    question = await Question.findById(QID)
+      .populate({
+        path: "author",
+        select: "firstName profile_image score",
+      })
+      .populate({
+        path: "answers",
+        populate: {
+          path: "author",
+          select: "firstName profile_image score",
+        },
+      });
+  } catch (err) {
+    const error = new HttpError("Finding question failed, try again.", 500);
+    return next(error);
+  }
+  if (!question) {
+    const error = new HttpError(
+      "Could not find a question for the provided ID.",
+      404
+    );
+    return next(error);
+  }
+  res.status(200).json({ question });
+};
 module.exports = {
   newQuestion,
   editQuestion,
   deleteQuestion,
   getQuestions,
   saveQuestion,
+  singleQuestion,
 };

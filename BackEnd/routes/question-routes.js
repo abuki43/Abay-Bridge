@@ -8,6 +8,7 @@ const {
   deleteQuestion,
   getQuestions,
   saveQuestion,
+  singleQuestion,
 } = require("../controllers/question-controller");
 
 // const checkAuth = require("../middleware/check-auth");
@@ -17,6 +18,7 @@ router.get("/save/:QID/:UID", saveQuestion);
 
 router.post("/:UID", fileUpload.single("image"), newQuestion);
 
+router.get("/single/:QID", singleQuestion);
 router.get("/:page", getQuestions);
 
 router.patch("/:QID", editQuestion);
