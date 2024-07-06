@@ -170,7 +170,7 @@ const Card = (props) => {
       {isLoading && <Loader />}
       <div className="header">
         <div className="authorProfileImage">
-          <img src={profileImage || avatar} alt="user" className="avatar" />
+          <img src={author.profile_image? profileImage : avatar} alt="user" className="avatar" />
         </div>
         <div className="user-info">
           <a href="" className="username">
