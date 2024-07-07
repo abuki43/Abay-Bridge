@@ -12,11 +12,14 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
+app.use(express.static(path.join(__dirname, "build")))
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use("/api/users", userRoutes);
