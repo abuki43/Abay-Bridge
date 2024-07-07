@@ -13,7 +13,7 @@ import Loader from "../../components/UIElements/Loader/Loader";
 
 const Profile = () => {
   const { userId } = useContext(AuthContext);
-  console.log(userId);
+
   const { isLoading, error, sendRequest, clearError } = useHttp();
   const [result, setResult] = useState({});
   useEffect(() => {
@@ -23,9 +23,7 @@ const Profile = () => {
           `${process.env.REACT_APP_BACKEND_URL}/users/me/${userId}`,
           "GET"
         );
-        console.log(response.user);
         setResult(response.user);
-        console.log(result);
       } catch (e) {
         toast.error(e.message);
         console.log(e);

@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
+import { AuthContext } from "./context-API";
+import Questions from "../pages/Questions/Questions";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../utils/context-API";
 
 const RedirectLoggedIn = ({ children }) => {
   const { isLoggedIn } = useContext(AuthContext);
+  isLoggedIn && <Navigate to="/questions"/>
 
-  return isLoggedIn ? <Navigate to="/questions" /> : children;
+  return isLoggedIn ? <Questions/> : children;
 };
 
 export default RedirectLoggedIn;

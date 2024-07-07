@@ -105,17 +105,17 @@ const SideBar = ({ isOpen, close, isLoggedIn, logout }) => {
           </ul>
           <div className="aside-Buttons">
             {!isLoggedIn && (
-              <Button color="inverse">
+              <Button color="inverse" padI="1">
                 <Link to="/login">Login/Signup</Link>
               </Button>
             )}
             {isLoggedIn && (
-              <Button color="black" padI="4">
+              <Button color="black" padI="3.6">
                 <Link to="/ask">Ask question</Link>
               </Button>
             )}
             {isLoggedIn && (
-              <Button color="inverse" padI="4" padB="0.54" onClick={logout}>
+              <Button color="inverse" padI="3.6" padB="0.54" onClick={logout}>
                 logout
               </Button>
             )}

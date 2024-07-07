@@ -97,18 +97,34 @@ const AboutPage = () => {
           <h2>Contact the Developer</h2>
           <p>
             If you have any questions or feedback, feel free to contact the
-            developer:
+            developer: Abubeker
           </p>
           <a
             href="https://t.me/Abking1"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             <FaTelegramPlane className="telegram-icon" />
             Telegram: @Abking1
           </a>
         </div>
       </section>
+
+      <section className="special-thanks">
+  <div className="container">
+    <h2>Special Thanks</h2>
+    <p className="thanks-text">
+  Special thanks to UI Designer{" "}
+  <a
+    href="https://mahi-designs.com"
+    className="designer-link"
+  >
+    Miheret
+  </a>{" "}
+  for her exceptional contributions to the Abay-bride project. 
+</p>
+
+    <p>Another specila thanks to developer Kena.</p>
+  </div>
+</section>
 
       <Footer />
     </div>

@@ -11,7 +11,6 @@ import "./AnswerCard.css";
 const AnswerCard = ({ answerData }) => {
   const { sendRequest, isLoading } = useHttp();
   const { isLoggedIn, userId } = useContext(AuthContext);
-  console.log(answerData);
   const {
     _id: answerId,
     content,

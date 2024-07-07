@@ -49,7 +49,7 @@ const Card = (props) => {
 
   const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
   const profileImage = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
-  const shareUrl = `${process.env.REACT_APP_URL}/question/${id}`;
+  const shareUrl = `192.168.0.27:3000/question/${id}`;
 
   useEffect(() => {
     if (author._id == userId) {
@@ -75,12 +75,15 @@ const Card = (props) => {
 
   const handleDelete = async () => {
     console.log(isMine, "isminee");
+    toggleCardOptions()
     if (window.confirm("Are you sure you want to delete this question?")) {
+      
       try {
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/questions/${props.data._id}`,
           "DELETE"
         );
+
         if (response.message === "successfully deleted!") {
           questionStateHandler("delete", props.data._id);
           toast.success("Question deleted successfully!");
@@ -98,7 +101,7 @@ const Card = (props) => {
       return;
     }
     navigate(
-      `/ask?edit=true&id=${id}&title=${title}&description=${description}&level=${level}&subject=${subject}&image=${postImage}`
+      `/ask?edit=true&id=${id}&title=${title}&description=${description}&level=${level}&subject=${subject}&image=${questionImage}`
     );
   };
 
@@ -112,12 +115,15 @@ const Card = (props) => {
         `${process.env.REACT_APP_BACKEND_URL}/questions/save/${props.data._id}/${userId}`,
         "GET"
       );
+      toggleCardOptions()
 
       toast.success(response.message);
     } catch (error) {
       toast.error("Failed to save question. Please try again.");
       console.log(error);
+      toggleCardOptions()
     }
+    
   };
 
   const submitAnswer = async (answer, QID = props.data._id) => {

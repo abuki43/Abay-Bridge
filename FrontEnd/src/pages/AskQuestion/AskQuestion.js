@@ -25,7 +25,7 @@ const AskQuestion = () => {
     "Engineering",
     "Art",
     "Law",
-    "Social studies",
+    "Social science",
     "other",
   ];
 
@@ -38,7 +38,7 @@ const AskQuestion = () => {
   const description = decodeURIComponent(searchParams.get("description"));
   const level = decodeURIComponent(searchParams.get("level"));
   const subject = decodeURIComponent(searchParams.get("subject"));
-  const image = decodeURIComponent(searchParams.get("image"));
+  const questionImage = decodeURIComponent(searchParams.get("image"));
 
   const {
     register,
@@ -61,9 +61,9 @@ const AskQuestion = () => {
       setValue("description", description);
       setValue("level", level);
       setValue("subject", subject);
-      setSelectedImage(image); // Set the selectedImage state with the image URL
+      
     }
-  }, [edit, title, description, level, subject, image]);
+  }, [edit, title, description, level, subject, questionImage]);
 
   const onSubmit = async (data) => {
     if (!edit) {
@@ -99,13 +99,13 @@ const AskQuestion = () => {
         formData.append("description", data.description);
         formData.append("level", data.level);
         formData.append("subject", data.subject);
+        console.log(!!selectedImage)
         selectedImage && formData.append("image", selectedImage);
 
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/questions/${QID}`,
           "PATCH",
-          JSON.stringify(data),
-          { "Content-Type": "application/json" }
+          formData
         );
 
         toast.success("Edited!");
@@ -149,7 +149,7 @@ const AskQuestion = () => {
                 type="text"
                 id="description"
                 placeholder="Description"
-                {...register("description", { required: true, max: 300 })}
+                {...register("description", { required: false, max: 300 })}
               />
               {errors.description && <span>Description is required.</span>}
             </div>
@@ -188,10 +188,10 @@ const AskQuestion = () => {
                 <div className="selectImageContainer">
                   {selectedImage && (
                     <img
-                      src={URL.createObjectURL(selectedImage)}
+                      src={ URL.createObjectURL(selectedImage)}
                       alt="Selected"
                     />
-                  )}{" "}
+                  )}
                 </div>
               )}
             </div>

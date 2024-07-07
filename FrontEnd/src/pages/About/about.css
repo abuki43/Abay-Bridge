@@ -163,6 +163,41 @@ body {
 .contact-developer a:hover {
   background-color: #555;
 }
+/* Special Thanks Section */
+.special-thanks {
+  background-color: #fff;
+  padding: 4rem 0;
+}
+
+.special-thanks h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  animation: fade-in 1s ease-in-out;
+}
+
+.special-thanks p {
+  font-size: 1.2rem;
+  color: #777;
+  animation: slide-up 1s ease-in-out;
+  animation-delay: 0.5s;
+  margin-bottom: 1rem; /* Added for spacing */
+}
+.designer-link {
+  display: inline-block;
+  font-size: 1.2rem;
+  background-color: #f2f2f2;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.designer-link:hover {
+  background-color: #e0e0e0;
+}
+
 
 /* Animations */
 @keyframes fade-in {

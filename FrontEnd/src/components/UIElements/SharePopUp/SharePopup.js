@@ -16,13 +16,22 @@ import {
 import { FaTimes, FaClipboard } from "react-icons/fa";
 import BackDrop from "../BackDrop/BackDrop";
 import "./SharePop.css";
+import { toast } from "react-toastify-modernize";
 
 const SharePopup = ({ shareUrl, title, description, toggleSharePopup }) => {
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareUrl);
-    alert("URL copied to clipboard");
-  };
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => {
+          toast.success("URL copied to clipboard");
+        })
+        .catch((error) => {
+          console.error("Failed to copy:", error);
+          toast.error("Copy to clipboard failed. Please copy manually.");
+        });
+  };}
 
+ 
   return (
     <BackDrop onClick={toggleSharePopup}>
       <div className="share-popup">

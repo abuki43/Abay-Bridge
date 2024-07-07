@@ -74,3 +74,23 @@
 .logout-button:hover {
   background-color: #354547;
 }
+
+@media (max-width:900px) {
+  .profile-banner{
+    padding: 20px 6px;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .profile-image{
+    width: 60px;
+    height: 60px;
+    align-self: flex-end;
+  }
+  
+  
+  
+  .stats-box{
+    padding: 10px 9px;
+    gap: 12px;
+  }
+}

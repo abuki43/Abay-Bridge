@@ -39,7 +39,6 @@ const Signup = ({ state }) => {
         return;
       }
       try {
-        console.log(data);
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
@@ -58,7 +57,6 @@ const Signup = ({ state }) => {
       }
     } else {
       const LoginData = { email: data.email, password: data.password };
-      console.log(JSON.stringify(LoginData));
       try {
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/login`,

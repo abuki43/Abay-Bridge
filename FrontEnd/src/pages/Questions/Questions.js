@@ -46,7 +46,6 @@ const Questions = () => {
 
   useEffect(() => {
     fetchQuestions(1);
-    console.log("use effect");
   }, []); // use efffect runs  when the page first reloads
 
   const fetchQuestions = async (

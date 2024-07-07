@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify-modernize";
 import ScrollToTop from "react-scroll-to-top";
 import { AuthContext } from "./utils/context-API";
@@ -13,17 +13,15 @@ import Profile from "./pages/Profile/Profile";
 import "react-toastify-modernize/dist/ReactToastify.css";
 import AskAI from "./pages/AskAI/AskAI";
 import AboutPage from "./pages/About/About";
+import SingleQuestionPage from "./pages/SingleQuestion/SingleQuestion";
 import PrivateRoute from "./utils/PrivateRoute";
 import RedirectLoggedIn from "./utils/RedirectLoggedIn";
-import SingleQuestionPage from "./pages/SingleQuestion/SingleQuestion";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
   const { userId, token, login, logout } = useAuth();
-  const location = useLocation();
-  const showScrollToTop = location.pathname !== "/askAI";
 
   return (
-    <>
       <AuthContext.Provider
         value={{ isLoggedIn: !!token, token, userId, login, logout }}
       >
@@ -39,58 +37,22 @@ function App() {
           pauseOnHover={false}
           theme="dark"
         />
-        {showScrollToTop && <ScrollToTop smooth color="black" top={40} />}
+        <ScrollToTop />
+
         <Routes>
-          <Route
-            path="/"
-            element={
-              <RedirectLoggedIn>
-                <LandingPage />
-              </RedirectLoggedIn>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RedirectLoggedIn>
-                <Signup state={false} />
-              </RedirectLoggedIn>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <RedirectLoggedIn>
-                <Signup state={true} />
-              </RedirectLoggedIn>
-            }
-          />
+          <Route path="/" element={<RedirectLoggedIn><LandingPage /></RedirectLoggedIn>} />
+          <Route path="/login" element={<RedirectLoggedIn><Signup state={false} /></RedirectLoggedIn>} />
+          <Route path="/signup" element={<RedirectLoggedIn><Signup state={true} /></RedirectLoggedIn>} />
           <Route path="/questions" element={<Questions />} />
-          <Route
-            path="/ask"
-            element={
-              <PrivateRoute>
-                <AskQuestion />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/question/:questionId"
-            element={<SingleQuestionPage />}
-          />
+          <Route path="/ask" element={<PrivateRoute><AskQuestion /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/question/:questionId" element={<SingleQuestionPage />} />
           <Route path="/askAI" element={<AskAI />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </AuthContext.Provider>
-    </>
+   
   );
 }
 

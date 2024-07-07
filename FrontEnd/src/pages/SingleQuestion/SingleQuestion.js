@@ -43,6 +43,7 @@ const SingleQuestionPage = () => {
             <Card data={question} />
           </div>
           <div className="answersContainer">
+            
             {answers.map((answer) => (
               <AnswerCard key={answer._id} answerData={answer} />
             ))}

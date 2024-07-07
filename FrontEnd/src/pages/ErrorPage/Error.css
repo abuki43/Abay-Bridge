@@ -1,0 +1,50 @@
+
+body, html, .error-container {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .error-content {
+    text-align: center;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error-title {
+    font-size: 72px;
+    margin: 0;
+    color: #ff6b6b;
+  }
+  
+  .error-message {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
+  }
+  
+  .error-button {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .error-button:hover {
+    background-color: #ff5252;
+  }
+  

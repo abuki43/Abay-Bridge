@@ -100,3 +100,10 @@
 .answer-reply-button:hover {
   opacity: 0.8;
 }
+
+@media (max-width:900px) {
+  .answer-container{
+    max-width: 480px;
+    width: 100%;
+  }
+}
