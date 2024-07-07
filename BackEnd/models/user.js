@@ -12,7 +12,7 @@ const userSchema = new Schema({
   profile_image: { type: String, required: false },
   questions: [{ type: mongoose.Types.ObjectId, ref: "Question" }],
   savedQuestions: [{ type: mongoose.Types.ObjectId, ref: "Question" }],
-  score: { type: Number },
+  score: { type: Number ,default:0},
   dateJoined: { type: Date },
   verificationStatus: { type: Boolean, default: false },
 });

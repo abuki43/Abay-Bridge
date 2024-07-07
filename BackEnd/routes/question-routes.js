@@ -21,7 +21,7 @@ router.post("/:UID", fileUpload.single("image"), newQuestion);
 router.get("/single/:QID", singleQuestion);
 router.get("/:page", getQuestions);
 
-router.patch("/:QID", editQuestion);
+router.patch("/:QID",fileUpload.single("image"), editQuestion);
 
 router.delete("/:QID", deleteQuestion);
 

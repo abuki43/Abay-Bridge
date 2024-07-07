@@ -3,7 +3,7 @@ const Joi = require("joi");
 const questionValidator = (question) => {
   const schema = Joi.object({
     title: Joi.string().min(3).max(255).required(),
-    description: Joi.string().min(3).max(1000),
+    description: Joi.string().min(3).max(1000).allow(''),
     level: Joi.string()
       .valid(
         "Primary School",
@@ -13,7 +13,7 @@ const questionValidator = (question) => {
       )
       .required(),
     image: Joi.any(),
-    subject: Joi.string().min(3).max(1000).required(),
+    subject: Joi.string().min(3).max(100).required(),
   });
   return schema.validate(question);
 };

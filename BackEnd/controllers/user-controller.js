@@ -171,7 +171,7 @@ const login = async (req, res, next) => {
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ email: { $regex: new RegExp(email, 'i') } });
   } catch (err) {
     const error = new HttpError("Login failed, please try again", 500);
     return next(error);

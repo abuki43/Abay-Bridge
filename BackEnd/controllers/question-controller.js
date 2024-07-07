@@ -102,6 +102,9 @@ const editQuestion = async (req, res, next) => {
   question.isEdited = true;
   question.level = level;
   question.subject = subject;
+  question.image= req.file?.path || ""
+
+  console.log(req.file?.path)
 
   try {
     await question.save();

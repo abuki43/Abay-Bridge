@@ -37,7 +37,7 @@ console.log(process.env.mongoDBUrl);
 mongoose
   .connect(process.env.mongoDBUrl)
   .then(() => {
-    app.listen(process.env.PORT);
+    app.listen(process.env.PORT,'0.0.0.0');
     console.log("listening on " + process.env.PORT);
   })
   .catch((err) => {
