@@ -49,7 +49,7 @@ const Card = (props) => {
 
   const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
   const profileImage = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
-  const shareUrl = `192.168.0.27:3000/question/${id}`;
+  const shareUrl = `${process.env.REACT_APP_URL}/question/${id}`;
 
   useEffect(() => {
     if (author._id == userId) {
