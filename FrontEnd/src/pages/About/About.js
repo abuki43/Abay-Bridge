@@ -114,7 +114,7 @@ const AboutPage = () => {
     <p className="thanks-text">
   Special thanks to UI Designer{" "}
   <a
-    href="https://mahi-designs.com"
+    href=""
     className="designer-link"
   >
     Miheret
@@ -122,7 +122,7 @@ const AboutPage = () => {
   for her exceptional contributions to the Abay-bride project. 
 </p>
 
-    <p>Another specila thanks to developer Kena.</p>
+    <p>Another Special thanks to developer Kena.</p>
   </div>
 </section>
 
