@@ -20,7 +20,7 @@ import { toast } from "react-toastify-modernize";
 
 const SharePopup = ({ shareUrl, title, description, toggleSharePopup }) => {
   const copyToClipboard = () => {
-    if(navigator.clipboard){
+    if (navigator.clipboard) {
       navigator.clipboard.writeText(shareUrl)
         .then(() => {
           toast.success("URL copied to clipboard");
@@ -29,15 +29,20 @@ const SharePopup = ({ shareUrl, title, description, toggleSharePopup }) => {
           console.error("Failed to copy:", error);
           toast.error("Copy to clipboard failed. Please copy manually.");
         });
-  };}
+    }
+  }
 
- 
+  const handleCloseClick = (event) => {
+    event.stopPropagation();
+    toggleSharePopup();
+  };
+
   return (
     <BackDrop onClick={toggleSharePopup}>
-      <div className="share-popup">
+      <div className="share-popup" onClick={(e) => e.stopPropagation()}>
         <div className="share-header">
           <h3>Share This Question</h3>
-          <button className="close-btn" onClick={toggleSharePopup}>
+          <button className="close-btn" onClick={handleCloseClick}>
             <FaTimes size={20} />
           </button>
         </div>

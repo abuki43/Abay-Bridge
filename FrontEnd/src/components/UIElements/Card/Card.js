@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify-modernize";
 import { CiMenuKebab, CiSaveDown1, CiEdit } from "react-icons/ci";
@@ -47,6 +47,8 @@ const Card = (props) => {
   const [questionAnswers, setQuestionAnswers] = useState([]);
   const [showSharePopup, setShowSharePopup] = useState(false); // State for share popup
 
+  const cardOptionsRef = useRef(null);
+
   const imageURL = `${process.env.REACT_APP_ASSETS_URL}${questionImage}`;
   const profileImage = `${process.env.REACT_APP_ASSETS_URL}${author.profile_image}`;
   const shareUrl = `${process.env.REACT_APP_URL}/question/${id}`;
@@ -60,8 +62,26 @@ const Card = (props) => {
   const toggleSharePopup = () => setShowSharePopup((prev) => !prev); // Toggle share popup
 
   const toggleCardOptions = () => {
+    console.log("card options")
     setCardOptions((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        cardOptionsRef.current &&
+        !cardOptionsRef.current.contains(event.target)
+      ) {
+        setCardOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [cardOptionsRef]);
+
+
   const toggleDescrip = () => {
     setIsDescripExpanded((prev) => !prev);
   };
@@ -172,6 +192,7 @@ const Card = (props) => {
       )}
 
       {showCardOptions && isLoggedIn && (
+        <div ref={cardOptionsRef}>
         <CardOptions
           toggle={toggleCardOptions}
           isMine={isMine}
@@ -179,6 +200,7 @@ const Card = (props) => {
           saveHandler={handleSaveQuestion}
           editHandler={handleEdit}
         />
+      </div>
       )}
 
       {showSharePopup && (
