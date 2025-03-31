@@ -46,7 +46,7 @@ li {
 
 :root {
   /* font sizes */
-  --h1: 12px;
+  /* --h1: 12px;
   --h2: 16px;
   --h3: 20px;
   --h4: 32px;
@@ -54,7 +54,7 @@ li {
   --h6: 40px;
   --h7: 48px;
   --h8: 14px;
-  --h9: 64px;
+  --h9: 64px; */
 
   /* colors */
 
@@ -106,7 +106,7 @@ li {
   --gap-1: 5px;
 
   /* Paddings */
-  --pad-11: 160px;
+  /* --pad-11: 160px;
   --pad-10: 100px;
   --pad-9: 50px;
   --pad-8: 40px;
@@ -116,7 +116,30 @@ li {
   --pad-4: 15px;
   --pad-3: 11px;
   --pad-2: 8px;
-  --pad-1: 4px;
+  --pad-1: 4px; */
+
+  --pad-11: 112px;
+--pad-10: 70px;
+--pad-9: 35px;
+--pad-8: 28px;
+--pad-7: 15px;
+--pad-6: 14px;
+--pad-5: 13px;
+--pad-4: 11px;
+--pad-3: 8px;
+--pad-2: 6px;
+--pad-1: 3px;
+
+--h1: 8px;
+--h2: 11px;
+--h3: 14px;
+--h4: 22px;
+--h5: 17px;
+--h6: 28px;
+--h7: 34px;
+--h8: 10px;
+--h9: 45px;
+
 
   /* Border radiuses */
   --br-7: 48px;

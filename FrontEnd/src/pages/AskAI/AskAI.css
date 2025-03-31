@@ -2,88 +2,99 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  /* justify-content: center; */
+  padding-top: 2rem;
+  padding-inline: 20px;
   background-color: #e4f1fe;
   min-height: 100vh;
 }
 
+.introContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.introContainer h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
 .chatContainer {
   width: 100%;
-  max-width: 1200px;
-  height: 75vh;
+  max-width: 800px;
+  height: 80vh;
   overflow-y: auto;
-  border-radius: 20px;
-  background-color: #fff;
+  border-radius: 15px;
+  background-color: #ffffff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin: 1rem;
+  margin: 1rem 0;
   position: relative;
 }
 
 .chat {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .message {
   display: flex;
   align-items: flex-start;
+  width: fit-content;
+  max-width: 80%;
+  padding: 10px;
+  border-radius: 15px;
+  font-size: 16px;
+  word-wrap: break-word;
   position: relative;
-  width: 100%;
+  margin-bottom: 18px;
 }
 
-.message.ai {
-  align-self: flex-end;
-  flex-direction: row-reverse;
+.user {
+  align-self: flex-start;
 }
 
 .user .textContainer {
   background-color: #bdd5ea;
   color: #333;
-  border-radius: 20px;
-  padding: 15px;
-  margin-left: 20px;
-  animation: fadeIn 0.5s ease;
+  border-radius: 15px;
+  padding: 12px 16px;
 }
 
-.ai .textContainer {
+.message.bot {
+  align-self: flex-end;
+}
+
+.bot .textContainer {
   background-color: #dbf1ff;
   color: #333;
-  border-radius: 20px;
-  padding: 15px;
-  margin-right: 20px;
-  animation: fadeIn 0.5s ease;
+  border-radius: 15px;
+  padding: 12px 16px;
 }
 
-.askAIPage .icon {
-  width: 40px;
-  height: 40px;
+.copyButton {
+  position: absolute;
+  bottom: -18px;
+  right: 10px;
+  background-color: transparent;
   color: #5e81ac;
-  margin-top: 7px;
-  margin-right: 10px;
-  flex-shrink: 0; /* Added property */
-}
-
-.messageText {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  flex-grow: 1; /* Added property */
-}
-
-.askAIPage .copyButton {
+  border: none;
   cursor: pointer;
-  color: #e5e8eb;
-  background-color: #333;
-  display: none;
+  font-size: 14px;
+  opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 5px;
 }
 
 .message:hover .copyButton {
-  display: inline;
-  margin-top: 5px;
+  opacity: 1;
 }
 
 .inputContainer {
@@ -91,90 +102,34 @@
   align-items: center;
   gap: 10px;
   margin-top: 20px;
-  justify-content: center;
-  position: fixed; /* Updated property */
-  bottom: 10px;
+  position: fixed;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 90%;
+  max-width: 800px;
 }
 
-.askAIPage input[type="text"] {
-  max-width: 500px;
-  padding: 15px;
+.chatInput {
+  flex: 1;
+  padding: 12px 15px;
   border: none;
   border-radius: 10px;
   background-color: #e1e1e1;
-  color: #333;
   font-size: 16px;
-  margin-bottom: 0;
+  color: #333;
 }
 
-.askAIPage .chatContainer button {
-  padding: 15px 30px;
+.sendButton, .clearButton {
+  padding: 12px 15px;
   background-color: #367ec4;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 10px;
-  /* cursor: pointer; */
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.askAIPage .chatContainer button:hover {
-  background-color: #367ec4;
-}
-
-.loading {
-  display: flex;
-  justify-content: center;
-}
-
-.loading-dots {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #333;
-  margin-right: 5px;
-  animation: loading 1s infinite;
-}
-
-@keyframes loading {
-  0% {
-    opacity: 0.2;
-  }
-  20% {
-    opacity: 0.4;
-  }
-  40% {
-    opacity: 0.6;
-  }
-  60% {
-    opacity: 0.8;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.2;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@media (min-width: 1000px) {
-  .message {
-    width: 60%;
-  }
-  .inputContainer {
-    bottom: 2rem;
-  }
+.sendButton:hover {
+  background-color: #2b6aa9;
 }

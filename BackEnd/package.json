@@ -4,7 +4,7 @@
   "description": "Abay-Bridge Educational Q and A platform backend code",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "prod": "NODE_ENV=production nodemon app.js"
   },

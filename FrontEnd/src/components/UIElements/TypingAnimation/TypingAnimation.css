@@ -1,0 +1,42 @@
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #666;
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1.4s infinite ease-in-out both;
+  }
+  
+  .dot:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0s;
+  }
+  
+  @keyframes typing {
+    0% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    40%, 100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+  }
